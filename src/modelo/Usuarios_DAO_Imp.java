@@ -6,6 +6,7 @@
 package modelo;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
@@ -27,14 +28,17 @@ public class Usuarios_DAO_Imp extends UsuariosVO{
     }
     
     
+    //SET id= '"+ id +"' AND Nombre= '"+ Nombre +"' AND Appelido1 = '"+ Apellido1 +"' AND Apellido2 = '"+ Apellido2 +"'";
+    
     public boolean update(UsuariosVO usuario) {
         Connection connect = null;
         Statement stm = null;
 
         boolean actualizar = false;
 
-        String sql = "UPDATE usuario set nombre='" + usuario.getNombre()
-                + usuario.getPass() + "' where matricula = " + usuario.getMatricula();
+        String sql = "UPDATE usuario SET matricula= '" + usuario.getMatricula() +"' AND nombre= '" 
+                + usuario.getNombre() + "' AND pass= '" + usuario.getPass() + "' AND bloqueo= '" 
+                + usuario.isBloqueo() + "' WHERE matricula= '" + usuario.getMatricula() +"'  ";
         try {
             connect = new ConexionDB().conectarMySQL();
             stm = connect.createStatement();
@@ -54,5 +58,32 @@ public class Usuarios_DAO_Imp extends UsuariosVO{
         }
         return actualizar;
     
+    }
+    
+    public UsuariosVO search(String matricula) throws Exception{
+        Connection con = null;
+        Statement stm = null;
+        ResultSet rs = null;
+        String sql = "SELECT * FROM usaurio where matricula = " + matricula;
+
+        UsuariosVO usuario = new UsuariosVO();
+
+        try {
+            con = new ConexionDB().conectarMySQL();
+            stm = con.createStatement();
+            rs = stm.executeQuery(sql);
+            while (rs.next()) {
+                usuario.setMatricula(rs.getString(1));
+                usuario.setNombre(rs.getString(2));
+                usuario.setPass(rs.getString(3));
+                usuario.setBloqueo(rs.getBoolean(4));
+            }
+            stm.close();
+            rs.close();
+            con.close();
+        } catch (Exception e) {
+           System.out.println("Error al buscar usuario");
+        }
+        return usuario;        
     }
 }
