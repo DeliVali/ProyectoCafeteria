@@ -10,7 +10,10 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;
@@ -56,7 +59,29 @@ public class LoginCafeteriaFXMLController implements Initializable {
             System.out.println("Error al leer el usuario en el login "+ e);
         }
         return false;
-        
+    }
+    
+    public void acceso(){
+        try{
+            Parent root = null;
+            if (this.estudiante.isTipo()==false){
+                root = FXMLLoader.load(getClass().getResource("/Ventanas/Ventana_EstudiantesFXML.fxml")); 
+                Scene scene = new Scene (root);
+                Stage stage = new Stage();
+                stage.setScene(scene);
+                stage.setResizable(false);
+                stage.show();
+            }else if (this.estudiante.isTipo()==true){
+                //root = FXMLLoader.load(getClass().getResource("/vista/VentasFXML.fxml"));
+            }
+            /*Scene scene = new Scene (root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();*/
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -69,9 +94,16 @@ public class LoginCafeteriaFXMLController implements Initializable {
     @FXML
     void ingresa(ActionEvent event) {
         if (verificacion()){
-            System.out.println("Ingresa");
+            Node source = (Node) event.getSource();
+            Stage stage = (Stage) source.getScene().getWindow();
+            stage.close();
+            this.acceso();
         }else{
-            System.out.println("Usuario incorrecto");
+            if (this.campoMatricula.getLength()==0 || this.campoPass.getLength()==0){
+                System.out.println("Campos vacios");
+            }else{
+                System.out.println("Usuario incorrecto");
+            }
         }
     }
     
