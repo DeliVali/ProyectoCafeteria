@@ -21,8 +21,8 @@ public interface Usuario_DAO {
     
     public UsuariosVO search(String matricula)throws Exception;
     
-    public boolean update(UsuariosVO usuario);
+    public boolean update(UsuariosVO usuario) throws Exception;
     
-    public boolean delete(UsuariosVO usuario); 
+    public boolean delete(UsuariosVO usuario) throws Exception; 
     
 }
