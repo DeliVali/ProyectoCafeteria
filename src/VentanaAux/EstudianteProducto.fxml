@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTabPane?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<JFXTabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@TabColor.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.EstudianteProductoController">
+   <tabs>
+      <Tab text="Productos">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #FFDBD9;" />
+        </content>
+      </Tab>
+      <Tab text="Sugerir Productos">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #FFDBD9;">
+               <children>
+                  <Label layoutX="14.0" layoutY="52.0" prefHeight="32.0" prefWidth="191.0" text="Nombre del producto:">
+                     <font>
+                        <Font name="Courier New" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="14.0" layoutY="121.0" prefHeight="32.0" prefWidth="231.0" text="Descripción del producto:">
+                     <font>
+                        <Font name="Courier New" size="15.0" />
+                     </font>
+                  </Label>
+                  <JFXTextField fx:id="textNombre" focusColor="#00ff4d" layoutX="212.0" layoutY="56.0" prefHeight="25.0" prefWidth="365.0" style="-fx-background-color: #F3C6C3;" unFocusColor="RED" />
+                  <JFXTextArea fx:id="textDesc" focusColor="#00ff22" layoutX="13.0" layoutY="153.0" prefHeight="137.0" prefWidth="582.0" style="-fx-background-color: #F3C6C3;" unFocusColor="RED" />
+                  <JFXButton fx:id="botonAgregar" layoutX="408.0" layoutY="313.0" onAction="#eventoAgregar" prefHeight="36.0" prefWidth="169.0" style="-fx-background-color: #F9A29C;" text="Agregar" />
+               </children>
+            </AnchorPane>
+        </content>
+      </Tab>
+   </tabs>
+</JFXTabPane>

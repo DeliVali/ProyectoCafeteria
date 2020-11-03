@@ -5,6 +5,7 @@
  */
 package proyectocafeteria;
 
+import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,22 +16,20 @@ import javafx.stage.Stage;
  *
  * @author jeffr
  */
-public class ProyectoCafeteria {
+public class ProyectoCafeteria extends Application {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // TODO code application logic here
-          launch(args);
+     public static void main(String[] args) {
+        launch(args);
     }
-    
+
+
+    @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/vista/FXMLEditarUsuario.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/Ventanas/Ventana_EstudiantesFXML.fxml"));
         Scene scene = new Scene(root);
+        stage.setTitle("Login");
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
     }
-    
 }
