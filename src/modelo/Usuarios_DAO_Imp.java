@@ -24,41 +24,10 @@ public class Usuarios_DAO_Imp implements Usuario_DAO{
         return false;
     
     }
-    
-    @Override
-    public UsuariosVO read(String matricula) throws Exception {
-        Connection con = null;
-        Statement stm = null;
-        ResultSet rs = null;
-        String sql = "select * from usuario where matricula = '" + matricula + "' ";
-
-        UsuariosVO usuario = new UsuariosVO();
-
-        try {
-            con = new ConexionDB().conectarMySQL();
-            stm = con.createStatement();
-            rs = stm.executeQuery(sql);
-            while (rs.next()) {
-                usuario.setMatricula(rs.getString(1));
-                usuario.setNombre(rs.getString(2));
-                usuario.setPass(rs.getString(3));
-                usuario.setTipo(rs.getBoolean(4));
-                usuario.setBloqueo(rs.getBoolean(5));
-            }
-            stm.close();
-            rs.close();
-            con.close();
-        }catch (Exception e){
-            System.out.println("Error en el metodo read de usuarios"+ e);
-            //throw new Exception ("Error en read Exception" + e.getMessage());
-            
-        }
-        return usuario;
-    }
+      
     
     
-    //SET id= '"+ id +"' AND Nombre= '"+ Nombre +"' AND Appelido1 = '"+ Apellido1 +"' AND Apellido2 = '"+ Apellido2 +"'";
-    
+       
     @Override
     public boolean update(UsuariosVO usuario) throws Exception{
         Connection connect = null;
@@ -66,9 +35,9 @@ public class Usuarios_DAO_Imp implements Usuario_DAO{
 
         boolean actualizar = false;
 
-        String sql = "UPDATE usuario SET matricula= '" + usuario.getMatricula() +"' AND nombre= '" 
-                + usuario.getNombre() + "' AND pass= '" + usuario.getPass() + "' AND bloqueo= '" 
-                + usuario.isBloqueo() + "' WHERE matricula= '" + usuario.getMatricula() +"'  ";
+        String sql = "UPDATE usuario SET Matricula= '" + usuario.getMatricula() +"' ,Nombre= '" 
+                + usuario.getNombre() + "' , Pass= '" + usuario.getPass() + "', Tipo = " + usuario.isTipo() +  " , Bloqueo= " 
+                + usuario.isBloqueo() + " WHERE Matricula= '" + usuario.getMatricula() +"'  ";
         try {
             connect = new ConexionDB().conectarMySQL();
             stm = connect.createStatement();
@@ -77,7 +46,7 @@ public class Usuarios_DAO_Imp implements Usuario_DAO{
             try {
                 throw new Exception("Error en update SQLException: " + e.getMessage());
             } catch (Exception ex) {
-                Logger.getLogger(Usuarios_DAO_Imp.class.getName()).log(Level.SEVERE, null, ex);
+                e.printStackTrace();
             }
         } catch(Exception e){
             try {
@@ -89,34 +58,7 @@ public class Usuarios_DAO_Imp implements Usuario_DAO{
         return actualizar;
     
     }
-    
-    @Override
-    public UsuariosVO search(String matricula) throws Exception{
-        Connection con = null;
-        Statement stm = null;
-        ResultSet rs = null;
-        String sql = "SELECT * FROM usaurio where matricula = " + matricula;
-
-        UsuariosVO usuario = new UsuariosVO();
-
-        try {
-            con = new ConexionDB().conectarMySQL();
-            stm = con.createStatement();
-            rs = stm.executeQuery(sql);
-            while (rs.next()) {
-                usuario.setMatricula(rs.getString(1));
-                usuario.setNombre(rs.getString(2));
-                usuario.setPass(rs.getString(3));
-                usuario.setBloqueo(rs.getBoolean(4));
-            }
-            stm.close();
-            rs.close();
-            con.close();
-        } catch (Exception e) {
-           System.out.println("Error al buscar usuario");
-        }
-        return usuario;        
-    }
+   
 
     @Override
     public List<UsuariosVO> readAll() throws Exception {
@@ -126,5 +68,36 @@ public class Usuarios_DAO_Imp implements Usuario_DAO{
     @Override
     public boolean delete(UsuariosVO usuario) throws Exception{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public UsuariosVO read(String matricula) throws Exception {
+        Connection con = null;
+        Statement stm = null;
+        ResultSet rs = null;
+        String sql = "SELECT * FROM usuario WHERE Matricula ='" + matricula + "'";
+
+        UsuariosVO usuario = new UsuariosVO();
+
+        try {
+            con = new ConexionDB().conectarMySQL();
+            stm = con.createStatement();
+            rs = stm.executeQuery(sql);
+            
+            while (rs.next()) {
+                usuario.setMatricula(rs.getString(1));
+                usuario.setNombre(rs.getString(2));
+                usuario.setPass(rs.getString(3));
+                usuario.setTipo(rs.getBoolean(4));
+                usuario.setBloqueo(rs.getBoolean(5));
+            }
+            stm.close();
+            rs.close();
+            con.close();
+        } catch (Exception e) {
+           //System.out.println("Error al buscar usuario");
+           e.printStackTrace();
+        }
+        return usuario;      
     }
 }

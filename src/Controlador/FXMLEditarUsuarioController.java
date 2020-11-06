@@ -9,6 +9,8 @@ import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -53,6 +55,9 @@ public class FXMLEditarUsuarioController implements Initializable {
 
     @FXML
     private TextField txtNombre;
+    
+    @FXML
+    private TextField txtTipo;
 
     @FXML
     private TextField txtContrasena;
@@ -60,7 +65,7 @@ public class FXMLEditarUsuarioController implements Initializable {
     @FXML
     private TextField txtBloqueo;
    
-    private UsuariosVO usuario;
+    private UsuariosVO usuario =new UsuariosVO();
     
     private Usuarios_DAO_Imp implementacionDAO=new Usuarios_DAO_Imp();
     
@@ -82,33 +87,51 @@ public class FXMLEditarUsuarioController implements Initializable {
     
     @FXML
     void buscarUsuario(ActionEvent event) throws Exception {
-        matricula = txtMatricula.getText();
-        this.implementacionDAO.search(matricula);
+        
+        matricula = txtBuscarUsuario.getText();
+        
+        UsuariosVO usuario = new UsuariosVO();
+        usuario = implementacionDAO.read(matricula);
         
         this.txtMatricula.setText(usuario.getMatricula());
         this.txtNombre.setText(usuario.getNombre());
         this.txtContrasena.setText(usuario.getPass());
+       
+        
+        
+        if(usuario.isTipo() == false){
+            this.txtTipo.setText("Cliente");
+        }else{
+            this.txtTipo.setText("Administrador");
+        }
         
         if(usuario.isBloqueo() == false){
             this.txtBloqueo.setText("No bloqueado");
         }else{
             this.txtBloqueo.setText("Bloqueado");
         }
+        
     }
     
-    
+       
     @FXML
     void cancelar(ActionEvent event) throws Exception {
     }
 
     @FXML
     void guardarEdicion(ActionEvent event) {
+                
         this.usuario.setMatricula((this.txtMatricula.getText()));
         this.usuario.setNombre((this.txtNombre.getText()));
         this.usuario.setPass((this.txtContrasena.getText()));
+        this.usuario.setTipo(false);
         this.usuario.setBloqueo(false);
         
-        this.implementacionDAO.update(usuario);       
+         try {       
+             this.implementacionDAO.update(usuario);
+         } catch (Exception ex) {
+             System.out.println("Error al editar usuario");
+         }
     }
     
    
@@ -124,7 +147,7 @@ public class FXMLEditarUsuarioController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        this.implementacionDAO = new Usuarios_DAO_Imp();
     }    
 
   

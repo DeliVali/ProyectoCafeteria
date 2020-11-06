@@ -24,7 +24,7 @@
       </Label>
       <TextField fx:id="txtBuscarUsuario" layoutX="334.0" layoutY="157.0" prefHeight="36.0" prefWidth="606.0" />
       <TextField fx:id="txtMatricula" layoutX="336.0" layoutY="263.0" prefHeight="36.0" prefWidth="781.0" />
-      <Label layoutX="334.0" layoutY="113.0" text="Buscar usuario a editar">
+      <Label layoutX="334.0" layoutY="113.0" text="Matrícula del usuario a editar">
          <font>
             <Font size="18.0" />
          </font>
@@ -32,7 +32,7 @@
       <Button fx:id="btnBuscarUsuario" layoutX="952.0" layoutY="157.0" mnemonicParsing="false" onAction="#buscarUsuario" prefHeight="36.0" prefWidth="163.0" text="Buscar" />
       <TextField fx:id="txtNombre" layoutX="336.0" layoutY="364.0" prefHeight="36.0" prefWidth="781.0" />
       <TextField fx:id="txtContrasena" layoutX="334.0" layoutY="476.0" prefHeight="36.0" prefWidth="781.0" />
-      <TextField fx:id="txtBloqueo" editable="false" layoutX="336.0" layoutY="596.0" prefHeight="36.0" prefWidth="606.0" />
+      <TextField fx:id="txtBloqueo" editable="false" layoutX="683.0" layoutY="596.0" prefHeight="36.0" prefWidth="259.0" />
       <Label layoutX="334.0" layoutY="227.0" text="Matrícula">
          <font>
             <Font size="18.0" />
@@ -48,7 +48,7 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="337.0" layoutY="547.0" text="Bloqueo de usuario">
+      <Label layoutX="683.0" layoutY="557.0" text="Bloqueo de usuario">
          <font>
             <Font size="18.0" />
          </font>
@@ -60,5 +60,11 @@
             <Button fx:id="btnCancelar" defaultButton="true" mnemonicParsing="false" onAction="#cancelar" text="Cancelar" />
         </buttons>
       </ButtonBar>
+      <Label layoutX="332.0" layoutY="557.0" text="Tipo de usuario">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtTipo" editable="false" layoutX="336.0" layoutY="596.0" prefHeight="36.0" prefWidth="308.0" />
    </children>
 </AnchorPane>

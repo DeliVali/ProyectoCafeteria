@@ -19,7 +19,7 @@ public interface Usuario_DAO {
     
     public UsuariosVO read(String matricula)throws Exception;
     
-    public UsuariosVO search(String matricula)throws Exception;
+    //public UsuariosVO search(String matricula)throws Exception;
     
     public boolean update(UsuariosVO usuario) throws Exception;
     
