@@ -27,6 +27,13 @@ public class ProductoVO {
         this.cantidad = cantidad;
         this.precio = precio;
     }
+    
+    public ProductoVO(String nombre, int cantidad, int precio){
+        this.id = 0;
+        this.nombre = nombre;
+        this.cantidad = cantidad;
+        this.precio = precio;
+    }
 
     
     
