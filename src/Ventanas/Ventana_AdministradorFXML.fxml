@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="675.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.Ventana_AdministradorFXML">
+   <left>
+      <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #5363EA;" BorderPane.alignment="CENTER">
+         <children>
+            <JFXButton onMouseClicked="#boton_Pro" prefHeight="40.0" prefWidth="106.0" style="-fx-background-color: transparent; -fx-text-fill: #f0f0f0;" text="Productos">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </JFXButton>
+            <JFXButton onMouseClicked="#boton_Horario" prefHeight="40.0" prefWidth="106.0" style="-fx-background-color: transparent; -fx-text-fill: #f0f0f0;" text="Horario">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </JFXButton>
+            <JFXButton onMouseClicked="#boton_Menu" prefHeight="40.0" prefWidth="106.0" style="-fx-background-color: transparent; -fx-text-fill: #f0f0f0;" text="Menus">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </JFXButton>
+            <JFXButton onMouseClicked="#boton_Salir" prefHeight="40.0" prefWidth="106.0" style="-fx-background-color: transparent; -fx-text-fill: #f0f0f0;" text="Salir">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </JFXButton>
+         </children>
+      </VBox>
+   </left>
+</BorderPane>
