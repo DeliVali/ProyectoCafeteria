@@ -66,19 +66,14 @@ public class LoginCafeteriaFXMLController implements Initializable {
             Parent root = null;
             if (this.estudiante.isTipo()==false){
                 root = FXMLLoader.load(getClass().getResource("/Ventanas/Ventana_EstudiantesFXML.fxml")); 
-                Scene scene = new Scene (root);
-                Stage stage = new Stage();
-                stage.setScene(scene);
-                stage.setResizable(false);
-                stage.show();
             }else if (this.estudiante.isTipo()==true){
-                //root = FXMLLoader.load(getClass().getResource("/vista/VentasFXML.fxml"));
+                root = FXMLLoader.load(getClass().getResource("/Ventanas/Ventana_AdministradorFXML.fxml"));
             }
-            /*Scene scene = new Scene (root);
+            Scene scene = new Scene (root);
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.setResizable(false);
-            stage.show();*/
+            stage.show();
         }catch (Exception e){
             e.printStackTrace();
         }

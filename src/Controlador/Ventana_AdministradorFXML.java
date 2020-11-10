@@ -72,7 +72,8 @@ public class Ventana_AdministradorFXML implements Initializable {
     @FXML
     private void boton_Salir(MouseEvent event) {
         cerrarVentana(event);
-        
+        CerrarSesión al = new CerrarSesión();
+        al.cs();
     }
     
             public void cerrarVentana(MouseEvent event){
