@@ -24,6 +24,7 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </JFXButton>
+            <JFXButton onMouseClicked="#boton_Usu" prefHeight="40.0" prefWidth="106.0" style="-fx-background-color: transparent; -fx-text-fill: #f0f0f0;" text="Usuarios" />
             <JFXButton onMouseClicked="#boton_Salir" prefHeight="40.0" prefWidth="106.0" style="-fx-background-color: transparent; -fx-text-fill: #f0f0f0;" text="Salir">
                <VBox.margin>
                   <Insets top="10.0" />

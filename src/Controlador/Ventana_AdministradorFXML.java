@@ -53,6 +53,10 @@ public class Ventana_AdministradorFXML implements Initializable {
         
     }
 
+     @FXML
+    private void boton_Usu(MouseEvent event) {
+        
+    }
     
       private void cargarVentanas(String ui){
         Parent root = null;
@@ -76,5 +80,8 @@ public class Ventana_AdministradorFXML implements Initializable {
     Stage stage  = (Stage) source.getScene().getWindow();
     stage.close();
     }
+
+   
+    
     
 }

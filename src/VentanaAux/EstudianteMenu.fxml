@@ -1,14 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTabPane?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
 <JFXTabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@TabColor.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.EstudianteMenuController">
    <tabs>
       <Tab text="Menu">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #FFDBD9;" />
+        </content>
+      </Tab>
+      <Tab text="Sugerir Menu">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <JFXTextArea fx:id="textArea_SUME" focusColor="#91e495" layoutX="68.0" layoutY="129.0" style="-fx-background-color: transparent;" unFocusColor="RED" />
+                  <ChoiceBox fx:id="tipo_Menu_SUME" layoutX="68.0" layoutY="81.0" prefWidth="150.0" />
+                  <Label layoutX="68.0" layoutY="54.0" prefHeight="17.0" prefWidth="151.0" text="Tipo de menu">
+                     <font>
+                        <Font name="Haettenschweiler" size="24.0" />
+                     </font>
+                  </Label>
+                  <JFXButton fx:id="botonAgregarSUME" layoutX="415.0" layoutY="315.0" onAction="#evento_Agregar_SUME" prefHeight="39.0" prefWidth="111.0" text="Agregar" />
+               </children>
+            </AnchorPane>
         </content>
       </Tab>
    </tabs>
