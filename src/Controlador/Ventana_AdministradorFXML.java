@@ -55,7 +55,7 @@ public class Ventana_AdministradorFXML implements Initializable {
 
      @FXML
     private void boton_Usu(MouseEvent event) {
-        
+        cargarVentanas("/VentanaAux/AdminUsuario");
     }
     
       private void cargarVentanas(String ui){
@@ -63,7 +63,7 @@ public class Ventana_AdministradorFXML implements Initializable {
         try {
            root= FXMLLoader.load(getClass().getResource(ui+".fxml"));
         } catch (IOException ex) {
-            Logger.getLogger(Ventana_EstudiantesFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(Ventana_EstudiantesFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
         borderPane.setCenter(root);
     }

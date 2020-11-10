@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXTabPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="controlador.AdminUsuarioController">
+   <children>
+      <JFXTabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@TabColor.css">
+         <tabs>
+            <Tab text="Usuarios">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #FFDBD9;">
+                     <children>
+                        <TableView fx:id="tablaUsuarios" layoutX="-1.0" layoutY="1.0" prefHeight="365.0" prefWidth="600.0">
+                           <columns>
+                              <TableColumn fx:id="columnaMatricula" prefWidth="112.0" text="Matrícula" />
+                              <TableColumn fx:id="columnaNombre" prefWidth="223.0" text="Nombre" />
+                              <TableColumn fx:id="columnaPass" prefWidth="125.0" text="Contraseña" />
+                              <TableColumn fx:id="columnaTipo" prefWidth="67.0" text="Tipo" />
+                              <TableColumn fx:id="columnaBloqueo" minWidth="3.0" prefWidth="72.0" text="Bloqueo" />
+                           </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Editar usuario">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #FFDBD9;">
+                     <children>
+                        <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="367.0" prefWidth="600.0">
+                           <children>
+                              <TextField fx:id="txtBuscarUsuario" layoutX="14.0" layoutY="55.0" prefHeight="27.0" prefWidth="391.0" />
+                              <TextField fx:id="txtMatricula" layoutX="15.0" layoutY="117.0" prefHeight="25.0" prefWidth="190.0" />
+                              <Label layoutX="14.0" layoutY="20.0" text="Matrícula del usuario a editar">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <Button fx:id="btnBuscarUsuario" layoutX="416.0" layoutY="56.0" mnemonicParsing="false" onAction="#buscarUsuario" prefHeight="25.0" prefWidth="163.0" text="Buscar" />
+                              <TextField fx:id="txtNombre" layoutX="218.0" layoutY="116.0" prefHeight="27.0" prefWidth="365.0" />
+                              <TextField fx:id="txtContrasena" layoutX="15.0" layoutY="184.0" prefHeight="27.0" prefWidth="190.0" />
+                              <TextField fx:id="txtBloqueo" editable="false" layoutX="15.0" layoutY="253.0" prefHeight="27.0" prefWidth="190.0" />
+                              <Label layoutX="14.0" layoutY="90.0" text="Matrícula">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="218.0" layoutY="90.0" text="Nombre completo">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="14.0" layoutY="157.0" text="Contraseña">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="15.0" layoutY="226.0" text="Bloqueo de usuario">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <Button fx:id="btnBloquearUsuario" layoutX="219.0" layoutY="253.0" mnemonicParsing="false" onAction="#bloquearUsuario" prefHeight="27.0" prefWidth="183.0" text="Bloquear usuario" textFill="#e11111" />
+                              <ButtonBar layoutX="130.0" layoutY="307.0" prefHeight="40.0" prefWidth="452.0">
+                                 <buttons>
+                                    <Button fx:id="btnGuardarEdicion" mnemonicParsing="false" onAction="#guardarEdicion" prefHeight="25.0" prefWidth="120.0" text="Guardar edición" />
+                                 </buttons>
+                              </ButtonBar>
+                              <Label layoutX="218.0" layoutY="157.0" text="Tipo de usuario">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="txtTipo" editable="false" layoutX="218.0" layoutY="184.0" prefHeight="27.0" prefWidth="365.0" />
+                              <Button fx:id="btnDesbloquearUsuario" layoutX="411.0" layoutY="253.0" mnemonicParsing="false" onAction="#desbloquearUsuario" prefHeight="25.0" prefWidth="172.0" text="Desbloquear usuario" textFill="#1ed727" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+         </tabs>
+      </JFXTabPane>
+   </children>
+</AnchorPane>

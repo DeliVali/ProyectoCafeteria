@@ -32,9 +32,6 @@ import modelo.Usuarios_DAO_Imp;
  */
 public class FXMLEditarUsuarioController implements Initializable {
 
-     @FXML
-    private Button btnEditarUsuarioMenu;
-
     @FXML
     private TextField txtBuscarUsuario;
 
@@ -47,9 +44,6 @@ public class FXMLEditarUsuarioController implements Initializable {
     @FXML
     private Button btnGuardarEdicion;
 
-    @FXML
-    private Button btnCancelar;
-    
     @FXML
     private TextField txtMatricula;
 
@@ -65,19 +59,15 @@ public class FXMLEditarUsuarioController implements Initializable {
     @FXML
     private TextField txtBloqueo;
    
-    private UsuariosVO usuario =new UsuariosVO();
+    private UsuariosVO usuario = new UsuariosVO();
     
-    private Usuarios_DAO_Imp implementacionDAO=new Usuarios_DAO_Imp();
+    private Usuarios_DAO_Imp implementacionDAO = new Usuarios_DAO_Imp();
     
     private String matricula;
     
     private ObservableList<UsuariosVO> listaUsuario;
 
-    @FXML
-    void EditarUsuarioMenu(ActionEvent event) {
-
-    }
-
+  
     @FXML
     void bloquearUsuario(ActionEvent event) {
 
@@ -114,9 +104,7 @@ public class FXMLEditarUsuarioController implements Initializable {
     }
     
        
-    @FXML
-    void cancelar(ActionEvent event) throws Exception {
-    }
+
 
     @FXML
     void guardarEdicion(ActionEvent event) {

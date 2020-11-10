@@ -9,19 +9,16 @@ import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
 import modelo.UsuariosVO;
 import modelo.Usuarios_DAO_Imp;
 
@@ -30,8 +27,34 @@ import modelo.Usuarios_DAO_Imp;
  *
  * @author enrique
  */
-public class FXMLEditarUsuarioController implements Initializable {
+public class AdminUsuarioController implements Initializable {
 
+    // ------------------ Mostrar Usuarios ---------------------
+    @FXML
+    private TableView<UsuariosVO> tablaUsuarios;
+
+    @FXML
+    private TableColumn<UsuariosVO,String> columnaMatricula;
+
+    @FXML
+    private TableColumn<UsuariosVO, String> columnaNombre;
+
+    @FXML
+    private TableColumn<UsuariosVO, String> columnaPass;
+
+    @FXML
+    private TableColumn<UsuariosVO, Boolean> columnaTipo;
+
+    @FXML
+    private TableColumn<UsuariosVO, Boolean> columnaBloqueo;
+
+    //private Usuarios_DAO_Imp implementacionDAO;
+    
+    private ObservableList<UsuariosVO> listaDeUsuarios;
+    
+    // --------------------- Editar Usuario ------------------------
+    
+    
     @FXML
     private TextField txtBuscarUsuario;
 
@@ -40,10 +63,13 @@ public class FXMLEditarUsuarioController implements Initializable {
 
     @FXML
     private Button btnBloquearUsuario;
+    
+    @FXML
+    private Button btnDesbloquearUsuario;
 
     @FXML
     private Button btnGuardarEdicion;
-
+    
     @FXML
     private TextField txtMatricula;
 
@@ -59,21 +85,49 @@ public class FXMLEditarUsuarioController implements Initializable {
     @FXML
     private TextField txtBloqueo;
    
-    private UsuariosVO usuario = new UsuariosVO();
+    private UsuariosVO usuario =new UsuariosVO();
     
     private Usuarios_DAO_Imp implementacionDAO = new Usuarios_DAO_Imp();
     
     private String matricula;
     
-    private ObservableList<UsuariosVO> listaUsuario;
-
-  
+    
+    
+    public void obtenerUsuarios(){
+        List listaConsulta = null;
+        try{
+           listaConsulta = implementacionDAO.readAll();
+        }catch(Exception e){
+            System.out.println("Error al leer los usuarios");
+        }
+        Iterator it = listaConsulta.iterator();
+        listaDeUsuarios.clear();
+        while (it.hasNext()){
+            listaDeUsuarios.add((UsuariosVO)it.next());
+        }
+    }
+    
+    
+    public void colocarUsuariosTabla(){
+        this.obtenerUsuarios();
+        this.columnaMatricula.setCellValueFactory(new PropertyValueFactory<>("matricula"));
+        this.columnaNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        this.columnaPass.setCellValueFactory(new PropertyValueFactory<>("pass"));        
+        this.columnaTipo.setCellValueFactory(new PropertyValueFactory<>("tipo"));
+        this.columnaBloqueo.setCellValueFactory(new PropertyValueFactory<>("bloqueo"));
+        this.tablaUsuarios.setItems(listaDeUsuarios);
+    }
+    
+    
     @FXML
     void bloquearUsuario(ActionEvent event) {
-
+        
     }
 
-  
+    @FXML
+    void desbloquearUsuario(ActionEvent event) {
+
+    }
     
     @FXML
     void buscarUsuario(ActionEvent event) throws Exception {
@@ -86,8 +140,7 @@ public class FXMLEditarUsuarioController implements Initializable {
         this.txtMatricula.setText(usuario.getMatricula());
         this.txtNombre.setText(usuario.getNombre());
         this.txtContrasena.setText(usuario.getPass());
-       
-        
+  
         
         if(usuario.isTipo() == false){
             this.txtTipo.setText("Cliente");
@@ -103,9 +156,6 @@ public class FXMLEditarUsuarioController implements Initializable {
         
     }
     
-       
-
-
     @FXML
     void guardarEdicion(ActionEvent event) {
                 
@@ -122,22 +172,14 @@ public class FXMLEditarUsuarioController implements Initializable {
          }
     }
     
-   
-    private void start(Stage stage) throws Exception {
-        //Editar source
-        Parent root = FXMLLoader.load(getClass().getResource("/vista/FXMLPrincipal.fxml"));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.show();
-    }
-    
-    
+    /**
+     * Initializes the controller class.
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         this.implementacionDAO = new Usuarios_DAO_Imp();
+        this.listaDeUsuarios = FXCollections.observableArrayList();
+        this.colocarUsuariosTabla();
     }    
-
-  
     
 }

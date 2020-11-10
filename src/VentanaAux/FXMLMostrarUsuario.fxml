@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.FXMLMostrarUsuarioController">
+   <children>
+      <TableView fx:id="tablaUsuarios" layoutX="9.0" layoutY="65.0" prefHeight="327.0" prefWidth="582.0">
+        <columns>
+          <TableColumn fx:id="columnaMatricula" prefWidth="112.0" text="Matrícula" />
+          <TableColumn fx:id="columnaNombre" prefWidth="202.0" text="Nombre" />
+            <TableColumn fx:id="columnaPass" prefWidth="146.0" text="Contraseña" />
+            <TableColumn fx:id="columnaTipo" prefWidth="48.0" text="Tipo" />
+            <TableColumn fx:id="columnaBloqueo" minWidth="3.0" prefWidth="73.0" text="Bloqueo" />
+        </columns>
+      </TableView>
+      <Label layoutX="14.0" layoutY="14.0" text="Usuarios">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

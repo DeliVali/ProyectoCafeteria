@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -62,7 +63,35 @@ public class Usuarios_DAO_Imp implements Usuario_DAO{
 
     @Override
     public List<UsuariosVO> readAll() throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Connection con = null;
+        Statement stm = null;
+        ResultSet rs = null;
+        String sql = "SELECT * FROM usuario";
+
+        List<UsuariosVO> listaUsuarios = new ArrayList<UsuariosVO>();
+
+        try {
+            con = new ConexionDB().conectarMySQL();
+            stm = con.createStatement();
+            rs = stm.executeQuery(sql);
+            while (rs.next()) {
+                UsuariosVO c = new UsuariosVO(rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getBoolean(4),
+                        rs.getBoolean(5));
+                listaUsuarios.add(c);
+            }
+            stm.close();
+            rs.close();
+            con.close();
+        } catch (SQLException e) {
+            throw new Exception("Error en readAll SQLException: " + e.getCause().toString());
+        } catch(Exception e){
+            throw new Exception("Error en readAll: " + e.getCause().toString());
+        }
+
+        return listaUsuarios;
     }
 
     @Override
