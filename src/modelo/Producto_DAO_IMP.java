@@ -1,8 +1,11 @@
 package modelo;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Producto_DAO_IMP {
     
@@ -29,5 +32,34 @@ public class Producto_DAO_IMP {
         }
         
         return created;
+    }
+    
+    public List<ProductoVO> readAll() throws Exception{
+        Connection con = null;
+        Statement stm = null;
+        ResultSet rs = null;
+        String sql = "select * from producto order by ID";
+        
+        List<ProductoVO> listaProductos = new ArrayList<ProductoVO>();
+        
+        try{
+            con = new ConexionDB().conectarMySQL();
+            stm = con.createStatement();
+            rs = stm.executeQuery(sql);
+            while(rs.next()){
+                ProductoVO c = new ProductoVO(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5));
+                listaProductos.add(c);
+            }
+            stm.close();
+            rs.close();
+            con.close();
+        } catch(SQLException e){
+            throw new Exception ("Error en readAll SQLException" + e.getCause().toString());
+        } catch(Exception e){
+            throw new Exception ("Error en readAll Exceotion " + e.getMessage().toString());
+        }
+        
+        return listaProductos;
+    
     }
 }
