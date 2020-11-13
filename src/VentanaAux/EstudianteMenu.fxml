@@ -9,25 +9,30 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<JFXTabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@TabColor.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.EstudianteMenuController">
+<JFXTabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@TabMenu.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.EstudianteMenuController">
    <tabs>
       <Tab text="Menu">
         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #FFDBD9;" />
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #E7CA9A;" />
         </content>
       </Tab>
       <Tab text="Sugerir Menu">
         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #E7CA9A;">
                <children>
-                  <JFXTextArea fx:id="textArea_SUME" focusColor="#91e495" layoutX="68.0" layoutY="129.0" style="-fx-background-color: transparent;" unFocusColor="RED" />
-                  <ChoiceBox fx:id="tipo_Menu_SUME" layoutX="68.0" layoutY="81.0" prefWidth="150.0" />
-                  <Label layoutX="68.0" layoutY="54.0" prefHeight="17.0" prefWidth="151.0" text="Tipo de menu">
+                  <JFXTextArea fx:id="textArea_SUME" focusColor="#91e495" layoutX="68.0" layoutY="129.0" prefHeight="176.0" prefWidth="471.0" style="-fx-background-color: #FCF5D3;" unFocusColor="RED" />
+                  <ChoiceBox fx:id="tipo_Menu_SUME" layoutX="69.0" layoutY="47.0" prefWidth="150.0" />
+                  <Label layoutX="69.0" layoutY="22.0" prefHeight="17.0" prefWidth="151.0" text="Tipo de menu" textFill="#765012">
                      <font>
                         <Font name="Haettenschweiler" size="24.0" />
                      </font>
                   </Label>
-                  <JFXButton fx:id="botonAgregarSUME" layoutX="415.0" layoutY="315.0" onAction="#evento_Agregar_SUME" prefHeight="39.0" prefWidth="111.0" text="Agregar" />
+                  <JFXButton fx:id="botonAgregarSUME" layoutX="455.0" layoutY="315.0" onAction="#evento_Agregar_SUME" prefHeight="39.0" prefWidth="111.0" style="-fx-background-color: #F9E49D;" text="Agregar" textFill="#765012" />
+                  <Label layoutX="68.0" layoutY="104.0" prefHeight="17.0" prefWidth="151.0" text="Descripción" textFill="#765012">
+                     <font>
+                        <Font name="Haettenschweiler" size="24.0" />
+                     </font>
+                  </Label>
                </children>
             </AnchorPane>
         </content>

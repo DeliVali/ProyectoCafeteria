@@ -41,7 +41,7 @@ Sugerir_Menu_DAO_IMP implementacionSugerirDAO=new Sugerir_Menu_DAO_IMP();
         ObservableList <String> listaTipo= FXCollections.observableArrayList("Desayuno","Merienda","Comida");
         tipo_Menu_SUME.setItems(listaTipo);
     }    
-
+//Sugerir Menu
     @FXML
     private void evento_Agregar_SUME(ActionEvent event) {
         
@@ -63,11 +63,15 @@ Sugerir_Menu_DAO_IMP implementacionSugerirDAO=new Sugerir_Menu_DAO_IMP();
             alert.setHeaderText("Se ha agregado correctamente el producto!");
             alert.showAndWait();
             textArea_SUME.setText("");
-            tipo_Menu_SUME.getItems().removeAll(tipo_Menu_SUME.getItems());
+            
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
         }
     }
+    
+    
+    
     
 }
