@@ -18,8 +18,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import modelo.ProductoVO;
 import modelo.Producto_DAO_IMP;
@@ -55,8 +57,34 @@ public class EstudianteProductoController implements Initializable {
     private ProductoVO producto = new ProductoVO();
     private Producto_DAO_IMP imp = new Producto_DAO_IMP();
     private ObservableList<ProductoVO> listaDeProductos;
-
     
+   // Items de la reservación de productos
+    @FXML
+    private TextField txtBuscarProducto;
+
+    @FXML
+    private TextField txtNombreProducto;
+
+    @FXML
+    private TextField txtPrecioProducto;
+
+    @FXML
+    private TextField txtMatricula;
+
+    @FXML
+    private Button btnBuscarProducto;
+
+    @FXML
+    private Button btnReservarProducto;
+    
+    private String nombreP, nombrePro, matricula;
+    
+    //private ProductoVO producto = new ProductoVO();
+    
+    private int idProducto;
+    
+    private Producto_DAO_IMP implementacionDAO = new Producto_DAO_IMP();
+   // Finaliza items de la reservación de productos
 
     /**
      * Initializes the controller class.
@@ -90,6 +118,7 @@ public class EstudianteProductoController implements Initializable {
     @Override
 
     public void initialize(URL url, ResourceBundle rb) {
+       btnReservarProducto.setDisable(true);
        this.imp = new Producto_DAO_IMP();
        this.listaDeProductos = FXCollections.observableArrayList();
        this.colocarProductosTabla();
@@ -120,6 +149,62 @@ public class EstudianteProductoController implements Initializable {
         }
         }
             
+    }
+    
+    // Método de la reservación de productos
+    @FXML
+    void buscarProducto(ActionEvent event) throws Exception {
+      
+        
+        nombreP = txtBuscarProducto.getText();
+        
+        ProductoVO producto = new ProductoVO();
+        
+        if(nombreP.equals("")){
+            Alert alert =new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Nombre de producto a buscar vacío");
+            alert.setHeaderText("Campo de búsqueda vacío");
+            alert.showAndWait();
+        }else{
+        
+            producto = implementacionDAO.read(nombreP);
+            this.txtNombreProducto.setText(producto.getNombre());
+            this.txtPrecioProducto.setText(String.valueOf(producto.getPrecio()));
+            btnReservarProducto.setDisable(false);
+        }
+    }
+
+    // Método de la reservación de productos
+    @FXML
+    void reservarProducto(ActionEvent event) throws Exception {
+        
+        matricula = txtMatricula.getText(); 
+        
+        if(matricula.equals("")){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Ingresa tu matrícula");
+            alert.setHeaderText("Ingresa tu matrícula para finalizar la reservación");
+            alert.showAndWait();
+        }else{
+            nombrePro = txtNombreProducto.getText();
+            ProductoVO producto = new ProductoVO();
+            producto = implementacionDAO.read(nombrePro);
+
+            idProducto = producto.getId();            
+             
+            try{
+                this.implementacionDAO.reservar(idProducto, matricula); 
+                
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Reserva exitosa");
+                alert.setHeaderText("Tu reserva ha sido exitosa");
+                alert.showAndWait();
+                
+            }catch (Exception ex) {
+                System.out.println("Error al resevar producto");
+            }
+       }
+       
     }
     
     
