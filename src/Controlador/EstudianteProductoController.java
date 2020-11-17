@@ -59,23 +59,23 @@ public class EstudianteProductoController implements Initializable {
     private ObservableList<ProductoVO> listaDeProductos;
     
    // Items de la reservación de productos
-    @FXML
-    private TextField txtBuscarProducto;
-
-    @FXML
-    private TextField txtNombreProducto;
-
-    @FXML
-    private TextField txtPrecioProducto;
-
-    @FXML
-    private TextField txtMatricula;
+      @FXML
+    private JFXTextField txtBuscarProducto;
 
     @FXML
     private Button btnBuscarProducto;
 
     @FXML
     private Button btnReservarProducto;
+
+    @FXML
+    private JFXTextField txtNombreProducto;
+
+    @FXML
+    private JFXTextField txtPrecioProducto;
+
+    @FXML
+    private JFXTextField txtMatricula;
     
     private String nombreP, nombrePro, matricula;
     
