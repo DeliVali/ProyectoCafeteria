@@ -166,11 +166,20 @@ public class EstudianteProductoController implements Initializable {
             alert.setHeaderText("Campo de búsqueda vacío");
             alert.showAndWait();
         }else{
-        
+                
             producto = implementacionDAO.read(nombreP);
-            this.txtNombreProducto.setText(producto.getNombre());
-            this.txtPrecioProducto.setText(String.valueOf(producto.getPrecio()));
-            btnReservarProducto.setDisable(false);
+            
+            if(producto.getNombre().isEmpty()){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setHeaderText("Lo sentimos. Producto no disponible");
+                alert.setTitle("Búsqueda de producto");
+                alert.setContentText("Recuerda que contamos con la opción de sugerencia de productos");
+                alert.showAndWait();;
+            }else{
+                this.txtNombreProducto.setText(producto.getNombre());
+                this.txtPrecioProducto.setText(String.valueOf(producto.getPrecio()));
+                btnReservarProducto.setDisable(false);
+            }
         }
     }
 
