@@ -7,6 +7,7 @@ package Controlador;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
+import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -16,6 +17,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
+import modelo.MenuVO;
+import modelo.Menu_DAO_IMP;
 import modelo.Sugerir_Menu;
 import modelo.Sugerir_Menu_DAO_IMP;
 
@@ -33,13 +37,33 @@ Sugerir_Menu_DAO_IMP implementacionSugerirDAO=new Sugerir_Menu_DAO_IMP();
     private JFXTextArea textArea_SUME;
     @FXML
     private ChoiceBox<String> tipo_Menu_SUME;
-    /**
-     * Initializes the controller class.
-     */
+    
+    
+    //Elementos buscar Menú
+    @FXML
+    private JFXTextField txtBuscar;
+    @FXML
+    private Label campoNombreBuscar;
+    @FXML
+    private Label campoDesBuscar;
+    @FXML
+    private Label campoTipoBuscar;
+    @FXML
+    private Label campoDiaBuscar;
+    @FXML
+    private Label campoPrecioBuscar;
+    @FXML
+    private JFXButton botonBuscar;
+    private Menu_DAO_IMP implementacionBuscarDao = new Menu_DAO_IMP();
+    private MenuVO menuBuscar = new MenuVO();
+    //Termina lista de elementos buscar Menú
+    
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         ObservableList <String> listaTipo= FXCollections.observableArrayList("Desayuno","Merienda","Comida");
         tipo_Menu_SUME.setItems(listaTipo);
+        ocultarDatos();
     }    
 //Sugerir Menu
     @FXML
@@ -72,6 +96,34 @@ Sugerir_Menu_DAO_IMP implementacionSugerirDAO=new Sugerir_Menu_DAO_IMP();
     }
     
     
+    //Metodos Buscar Menu
+    @FXML
+    void buscar(ActionEvent event) {
+        String nombre = this.txtBuscar.getText();
+        try{
+            this.menuBuscar = this.implementacionBuscarDao.readNombre(nombre);
+            if (this.menuBuscar.getNombre()!=""){
+                this.campoNombreBuscar.setText(menuBuscar.getNombre());
+                this.campoDesBuscar.setText(menuBuscar.getDescripcion());
+                this.campoTipoBuscar.setText(menuBuscar.getTipo());
+                this.campoDiaBuscar.setText(menuBuscar.getDia());
+                this.campoPrecioBuscar.setText(Integer.toString(menuBuscar.getPrecio()));
+            }else{
+                this.txtBuscar.setText("Menu inexistente");
+                this.ocultarDatos();
+            }
+        }catch (Exception e){
+            System.out.println("Error al buscar menu "+ e);
+        }
+    }
     
+    public void ocultarDatos(){
+        this.campoNombreBuscar.setText("");
+        this.campoDesBuscar.setText("");
+        this.campoTipoBuscar.setText("");
+        this.campoDiaBuscar.setText("");
+        this.campoPrecioBuscar.setText("");
+    }
+    //Terminan metodos BuscarMenu
     
 }
