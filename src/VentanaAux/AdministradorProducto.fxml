@@ -9,41 +9,31 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<JFXTabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="443.0" prefWidth="630.0" stylesheets="@TabColor.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.AdministradorProductoController">
+<JFXTabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@TabColor.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.AdministradorProductoController">
    <tabs>
       <Tab text="Productos">
         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #FFDBD9;">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="362.0" prefWidth="700.0" style="-fx-background-color: #FFDBD9;">
                <children>
-                  <TableView fx:id="tvProducto" layoutX="-1.0" layoutY="29.0" prefHeight="382.0" prefWidth="636.0" stylesheets="@TabColor.css">
+                  <TableView fx:id="tvProducto" layoutX="1.0" layoutY="30.0" prefHeight="341.0" prefWidth="600.0" stylesheets="@TabColor.css">
                     <columns>
                       <TableColumn fx:id="tabNombre" prefWidth="104.0" text="Nombre" />
                       <TableColumn fx:id="tabDesc" prefWidth="274.0" text="Descripción" />
-                        <TableColumn fx:id="tabCanti" prefWidth="125.0" text="Cantidad" />
-                        <TableColumn fx:id="tabPrecio" prefWidth="121.0" text="Precio $" />
+                        <TableColumn fx:id="tabCanti" prefWidth="142.0" text="Cantidad" />
+                        <TableColumn fx:id="tabPrecio" prefWidth="75.0" text="Precio $" />
                     </columns>
                   </TableView>
-                  <JFXTextField fx:id="search" focusColor="#4a407c" layoutX="-1.0" layoutY="2.0" prefHeight="25.0" prefWidth="588.0" style="-fx-background-color: #ffffff; -fx-border-radius: 20px;" unFocusColor="#ffffff00" />
-                  <JFXButton alignment="CENTER" buttonType="RAISED" layoutX="587.0" layoutY="-1.0" onMouseClicked="#searchEvent" prefHeight="31.0" prefWidth="43.0" text=" " textAlignment="RIGHT" textFill="TRANSPARENT">
-                     <graphic>
-                        <ImageView fitHeight="24.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../Ventanas/imagenes/698956-icon-111-search-512.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </JFXButton>
+                  <JFXTextField fx:id="search" focusColor="#4a407c" layoutX="85.0" layoutY="2.0" prefHeight="25.0" prefWidth="513.0" style="-fx-background-color: #ffffff; -fx-border-radius: 20px;" unFocusColor="#ffffff00" />
+                  <Label layoutX="28.0" layoutY="6.0" prefHeight="17.0" prefWidth="38.0" text="Filtrar" />
                </children></AnchorPane>
         </content>
       </Tab>
       <Tab text="Agregar Producto">
         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #FFDBD9;">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="371.0" prefWidth="593.0" style="-fx-background-color: #FFDBD9;">
                <children>
                   <JFXButton fx:id="bAgregarProducto" layoutX="408.0" layoutY="313.0" onAction="#agregarProducto" prefHeight="36.0" prefWidth="169.0" style="-fx-background-color: #F9A29C;" text="Agregar" />
                   <Label layoutX="53.0" layoutY="27.0" text="Nombre:" textFill="#6d3743">
