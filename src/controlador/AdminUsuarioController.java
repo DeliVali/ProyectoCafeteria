@@ -122,33 +122,46 @@ public class AdminUsuarioController implements Initializable {
     
     @FXML
     void bloquearUsuario(ActionEvent event) throws Exception {
-        this.usuario.setMatricula((this.txtMatricula.getText()));
-        this.usuario.setNombre((this.txtNombre.getText()));
-        this.usuario.setPass((this.txtContrasena.getText()));
-        this.usuario.setTipo(false);
-        this.usuario.setBloqueo(true);
-        
+        String matricula = txtMatricula.getText();
+         
          try {
              
-             if(this.implementacionDAO.bloqueo(usuario)){
+             if(!this.implementacionDAO.bloqueo(matricula)){
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Bloqueo de usuario");
                 alert.setHeaderText("El usuario ha sido bloqueado");
                 alert.showAndWait();
              }else{
-                  Alert alert = new Alert(Alert.AlertType.WARNING);
+                Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Bloqueo de usuario");
                 alert.setHeaderText("No se pudo bloquear al usuario");
                 alert.showAndWait();
              }
          } catch (Exception ex) {
-             System.out.println("Error al editar usuario");
+             System.out.println("Error al bloquear usuario");
          }
     }
 
     @FXML
     void desbloquearUsuario(ActionEvent event) {
-
+        
+        String matricula = txtMatricula.getText();
+         
+        try{
+            if(!this.implementacionDAO.desbloqueo(matricula)){
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Desbloqueo de usuario");
+                alert.setHeaderText("El usuario ha sido desbloqueado");
+                alert.showAndWait();
+            }else{
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Desbloqueo de usuario");
+                alert.setHeaderText("No se pudo desbloquear al usuario");
+                alert.showAndWait();
+             }
+        } catch (Exception ex) {
+             System.out.println("Error al desbloquear usuario");
+         }
     }
     
     @FXML
@@ -158,25 +171,40 @@ public class AdminUsuarioController implements Initializable {
         
         UsuariosVO usuario = new UsuariosVO();
         
-        usuario = implementacionDAO.read(matricula);
-        
-        this.txtMatricula.setText(usuario.getMatricula());
-        this.txtNombre.setText(usuario.getNombre());
-        this.txtContrasena.setText(usuario.getPass());
+        try{
+            usuario = implementacionDAO.read(matricula);
+            if(!usuario.getMatricula().equals("")){
+    
+                this.txtMatricula.setText(usuario.getMatricula());
+                this.txtNombre.setText(usuario.getNombre());
+                this.txtContrasena.setText(usuario.getPass());
   
+                if(usuario.isTipo() == false){
+                    this.txtTipo.setText("Cliente");
+                }else{
+                    this.txtTipo.setText("Administrador");
+                }
         
-        if(usuario.isTipo() == false){
-            this.txtTipo.setText("Cliente");
-        }else{
-            this.txtTipo.setText("Administrador");
-        }
-        
-        if(usuario.isBloqueo() == false){
-            this.txtBloqueo.setText("No bloqueado");
-        }else{
-            this.txtBloqueo.setText("Bloqueado");
-        }
-        
+                if(usuario.isBloqueo() == false){
+                    this.txtBloqueo.setText("No bloqueado");
+                    this.btnBloquearUsuario.setDisable(false);
+                    this.btnDesbloquearUsuario.setDisable(true);
+                }else{
+                    this.txtBloqueo.setText("Bloqueado");
+                    this.btnDesbloquearUsuario.setDisable(false);
+                    this.btnBloquearUsuario.setDisable(true);
+                }
+                this.btnGuardarEdicion.setDisable(false);
+            }else{
+                // ventana mensaje error al buscar usuario
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Búsqueda de usuario");
+                alert.setHeaderText("No has ingresado una matrícula");
+                alert.showAndWait();
+            }
+        }catch (Exception ex) {
+             System.out.println("Error al buscar el usuario");
+         }
     }
     
     @FXML
@@ -188,8 +216,21 @@ public class AdminUsuarioController implements Initializable {
         this.usuario.setTipo(false);
         this.usuario.setBloqueo(false);
         
-         try {       
-             this.implementacionDAO.update(usuario);
+         try {    
+             if(!txtMatricula.getText().equals("") && !txtNombre.getText().equals("") && !txtContrasena.getText().equals("")){
+                this.implementacionDAO.update(usuario);
+                // Mensaje éxito
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Edición de usuario");
+                alert.setHeaderText("La información del usuario se actualizó");
+                alert.showAndWait();
+             }else{
+                 // Mensaje de error. No campos vacíos
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Edición de usuario");
+                alert.setHeaderText("No debe haber campos vacíos");
+                alert.showAndWait();
+             }
          } catch (Exception ex) {
              System.out.println("Error al editar usuario");
          }
@@ -203,6 +244,9 @@ public class AdminUsuarioController implements Initializable {
         this.implementacionDAO = new Usuarios_DAO_Imp();
         this.listaDeUsuarios = FXCollections.observableArrayList();
         this.colocarUsuariosTabla();
+        this.btnBloquearUsuario.setDisable(true);
+        this.btnDesbloquearUsuario.setDisable(true);
+        this.btnGuardarEdicion.setDisable(true);
     }    
     
 }
