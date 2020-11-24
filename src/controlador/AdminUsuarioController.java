@@ -14,6 +14,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -120,8 +121,29 @@ public class AdminUsuarioController implements Initializable {
     
     
     @FXML
-    void bloquearUsuario(ActionEvent event) {
+    void bloquearUsuario(ActionEvent event) throws Exception {
+        this.usuario.setMatricula((this.txtMatricula.getText()));
+        this.usuario.setNombre((this.txtNombre.getText()));
+        this.usuario.setPass((this.txtContrasena.getText()));
+        this.usuario.setTipo(false);
+        this.usuario.setBloqueo(true);
         
+         try {
+             
+             if(this.implementacionDAO.bloqueo(usuario)){
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Bloqueo de usuario");
+                alert.setHeaderText("El usuario ha sido bloqueado");
+                alert.showAndWait();
+             }else{
+                  Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Bloqueo de usuario");
+                alert.setHeaderText("No se pudo bloquear al usuario");
+                alert.showAndWait();
+             }
+         } catch (Exception ex) {
+             System.out.println("Error al editar usuario");
+         }
     }
 
     @FXML
@@ -135,6 +157,7 @@ public class AdminUsuarioController implements Initializable {
         matricula = txtBuscarUsuario.getText();
         
         UsuariosVO usuario = new UsuariosVO();
+        
         usuario = implementacionDAO.read(matricula);
         
         this.txtMatricula.setText(usuario.getMatricula());

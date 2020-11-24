@@ -59,6 +59,41 @@ public class Usuarios_DAO_Imp implements Usuario_DAO{
         return actualizar;
     
     }
+    
+    
+    @Override
+    public boolean bloqueo(UsuariosVO usuario) throws Exception{
+        Connection connect = null;
+        Statement stm = null;
+       boolean bloqueado = true;
+
+        boolean bloqueo = false;
+
+        String sql = "UPDATE usuario SET Matricula= '" + usuario.getMatricula() +"' ,Nombre= '" 
+                + usuario.getNombre() + "' , Pass= '" + usuario.getPass() + "', Tipo = " + usuario.isTipo() +  " , Bloqueo= " 
+                + bloqueado + " WHERE Matricula= '" + usuario.getMatricula() +"'  ";
+        try {
+            connect = new ConexionDB().conectarMySQL();
+            stm = connect.createStatement();
+            bloqueo = stm.execute(sql);    
+        } catch (SQLException e) {
+            try {
+                throw new Exception("Error en update SQLException: " + e.getMessage());
+            } catch (Exception ex) {
+                e.printStackTrace();
+            }
+        } catch(Exception e){
+            try {
+                throw new Exception("Error en update Exception " + e.getMessage());
+            } catch (Exception ex) {
+                Logger.getLogger(Usuarios_DAO_Imp.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return bloqueo;
+    
+    }
+    
+    
    
 
     @Override
