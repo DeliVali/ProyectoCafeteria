@@ -15,6 +15,7 @@ import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import modelo.ProductoVO;
@@ -56,7 +57,27 @@ public class AdministradorProductoController implements Initializable {
     @FXML
     private JFXTextField search;
     
-   
+    //Elemenetos buscar producto
+    @FXML
+    private JFXTextField txtBuscar;
+    @FXML
+    private JFXButton botonBuscar;
+    @FXML
+    private Label campoNombreBuscar;
+    @FXML
+    private Label campoDesBuscar;
+    @FXML
+    private Label campoPrecioBuscar;
+    @FXML
+    private Label campoIDBuscar;
+    @FXML
+    private Label campoCanBuscar;
+    private Producto_DAO_IMP implementacionBuscarDao = new Producto_DAO_IMP();
+    private ProductoVO productoBuscar = new ProductoVO();
+    //Termina lista de elementos buscar prodcutos
+
+    
+    
 
     @FXML
     void agregarProducto(ActionEvent event) throws Exception {
@@ -109,7 +130,7 @@ public class AdministradorProductoController implements Initializable {
        this.listaDeProductos = FXCollections.observableArrayList();
        this.colocarProductosTabla();
       buscar();
-    
+      this.ocultarDatos();
     }    
     
    
@@ -155,5 +176,44 @@ public class AdministradorProductoController implements Initializable {
 	
 		tvProducto.setItems(sortedData);
     }
+    
+    //Empiezan métodos buscar producto
+    @FXML
+    void buscar(ActionEvent event) {
+        int id = 0;
+        if (this.txtBuscar.getText().startsWith("1") || this.txtBuscar.getText().startsWith("2") || this.txtBuscar.getText().startsWith("3")
+                 || this.txtBuscar.getText().startsWith("4") || this.txtBuscar.getText().startsWith("5") || this.txtBuscar.getText().startsWith("6")
+                 || this.txtBuscar.getText().startsWith("7") || this.txtBuscar.getText().startsWith("8") || this.txtBuscar.getText().startsWith("9")
+                 || this.txtBuscar.getText().startsWith("0")){
+            id = Integer.parseInt(this.txtBuscar.getText());
+            try{
+                this.productoBuscar = this.implementacionBuscarDao.readId(id);
+                if (this.productoBuscar.getNombre()!=""){
+                    this.campoIDBuscar.setText(Integer.toString(productoBuscar.getId()));
+                    this.campoNombreBuscar.setText(productoBuscar.getNombre());
+                    this.campoDesBuscar.setText(productoBuscar.getDescripcion());
+                    this.campoCanBuscar.setText(Integer.toString(productoBuscar.getCantidad()));
+                    this.campoPrecioBuscar.setText(Integer.toString(productoBuscar.getPrecio()));
+                }else{
+                    this.txtBuscar.setText("producto inexistente");
+                    this.ocultarDatos();
+                }
+            }catch (Exception e){
+                System.out.println("Error al buscar producto "+ e);
+            }
+        }else{
+                this.txtBuscar.setText("Datos erroneos");
+                this.ocultarDatos();
+        }
+    }
+    
+    public void ocultarDatos(){
+        this.campoIDBuscar.setText("");
+        this.campoNombreBuscar.setText("");
+        this.campoDesBuscar.setText("");
+        this.campoCanBuscar.setText("");
+        this.campoPrecioBuscar.setText("");
+    }
+    //Terminan métodos buscar producto
     
 }
