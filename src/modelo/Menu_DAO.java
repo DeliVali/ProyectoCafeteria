@@ -1,3 +1,4 @@
+
 package modelo;
 import java.util.List;
 
@@ -15,5 +16,3 @@ public interface Menu_DAO {
     public boolean delete(MenuVO menu) throws Exception;
     
 }
-
-
