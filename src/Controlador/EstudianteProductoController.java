@@ -265,5 +265,17 @@ public class EstudianteProductoController implements Initializable {
         this.campoPrecioBuscar.setText("");
     }
     //Terminan métodos buscar producto
+
+    @FXML
+    private void buscarProducto(ActionEvent event) {
+    }
+
+    @FXML
+    private void reservarProducto(ActionEvent event) {
+    }
+
+    @FXML
+    private void buscar(ActionEvent event) {
+    }
     
 }
