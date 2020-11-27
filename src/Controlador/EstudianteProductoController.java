@@ -19,6 +19,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -85,6 +86,28 @@ public class EstudianteProductoController implements Initializable {
     
     private Producto_DAO_IMP implementacionDAO = new Producto_DAO_IMP();
    // Finaliza items de la reservación de productos
+    
+    //Elemenetos buscar producto
+    @FXML
+    private JFXTextField txtBuscar;
+
+    @FXML
+    private JFXButton botonBuscar;
+
+    @FXML
+    private Label campoNombreBuscar;
+
+    @FXML
+    private Label campoDesBuscar;
+
+    @FXML
+    private Label campoPrecioBuscar;
+    
+    private Producto_DAO_IMP implementacionBuscarDao = new Producto_DAO_IMP();
+    private ProductoVO productoBuscar = new ProductoVO();
+    
+    //Termina lista de elementos buscar prodcutos
+    
 
     /**
      * Initializes the controller class.
@@ -122,6 +145,7 @@ public class EstudianteProductoController implements Initializable {
        this.imp = new Producto_DAO_IMP();
        this.listaDeProductos = FXCollections.observableArrayList();
        this.colocarProductosTabla();
+       this.ocultarDatos();
     }    
 
     
@@ -150,7 +174,7 @@ public class EstudianteProductoController implements Initializable {
         }
             
     }
-    
+    /*
     // Método de la reservación de productos
     @FXML
     void buscarProducto(ActionEvent event) throws Exception {
@@ -216,6 +240,30 @@ public class EstudianteProductoController implements Initializable {
        
     }
     
-    
+    //Empiezan métodos buscar producto
+    @FXML
+    void buscar(ActionEvent event) {
+        String nombre = this.txtBuscar.getText();
+        try{
+            this.productoBuscar = this.implementacionBuscarDao.read(nombre);
+            if (this.productoBuscar.getNombre()!=""){
+                this.campoNombreBuscar.setText(productoBuscar.getNombre());
+                this.campoDesBuscar.setText(productoBuscar.getDescripcion());
+                this.campoPrecioBuscar.setText(Integer.toString(productoBuscar.getPrecio()));
+            }else{
+                this.txtBuscar.setText("producto inexistente");
+                this.ocultarDatos();
+            }
+        }catch (Exception e){
+            System.out.println("Error al buscar producto "+ e);
+        }
+    }
+    */
+    public void ocultarDatos(){
+        this.campoNombreBuscar.setText("");
+        this.campoDesBuscar.setText("");
+        this.campoPrecioBuscar.setText("");
+    }
+    //Terminan métodos buscar producto
     
 }

@@ -23,7 +23,9 @@ public interface Usuario_DAO {
     
     public boolean update(UsuariosVO usuario) throws Exception;
     
-    public boolean bloqueo(UsuariosVO usuario) throws Exception;
+    public boolean bloqueo(String matricula) throws Exception;
+    
+    public boolean desbloqueo(String matricula) throws Exception;
     
     public boolean delete(UsuariosVO usuario) throws Exception; 
     

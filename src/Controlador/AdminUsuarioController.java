@@ -152,7 +152,7 @@ public class AdminUsuarioController implements Initializable {
         
          try {
              
-             if(this.implementacionDAO.bloqueo(usuario)){
+             if(this.implementacionDAO.bloqueo(usuario.getMatricula())){
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Bloqueo de usuario");
                 alert.setHeaderText("El usuario ha sido bloqueado");

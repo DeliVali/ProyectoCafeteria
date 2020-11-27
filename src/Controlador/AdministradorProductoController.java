@@ -4,17 +4,12 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXTextField;
-import com.mysql.cj.util.StringUtils;
 import java.util.Iterator;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import modelo.ProductoVO;
@@ -22,7 +17,6 @@ import modelo.Producto_DAO_IMP;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 
 public class AdministradorProductoController implements Initializable {
 
@@ -37,6 +31,20 @@ public class AdministradorProductoController implements Initializable {
     @FXML
     private TextField tPrecio;
     @FXML
+    private TextField eNombre;
+    @FXML
+    private TextField eCant;
+    @FXML
+    private TextField ePrecio;
+    @FXML
+    private TextArea eDesc;
+    @FXML
+    private TextField eID;
+    @FXML
+    private JFXButton bEditarProducto;
+    @FXML
+    private JFXButton bEdit;
+    @FXML
     private TableView<ProductoVO> tvProducto;
     @FXML
     private TableColumn<ProductoVO, String> tabNombre;
@@ -46,17 +54,12 @@ public class AdministradorProductoController implements Initializable {
     private TableColumn<ProductoVO, Integer> tabCanti;
     @FXML
     private TableColumn<ProductoVO, Integer> tabPrecio;
+    private boolean Edicion;
     
     private ProductoVO producto = new ProductoVO();
     private Producto_DAO_IMP imp = new Producto_DAO_IMP();
     private ObservableList<ProductoVO> listaDeProductos;
-    
-    
-    
-    @FXML
-    private JFXTextField search;
-    
-   
+    private ProductoVO productoEditar;
 
     @FXML
     void agregarProducto(ActionEvent event) throws Exception {
@@ -67,15 +70,11 @@ public class AdministradorProductoController implements Initializable {
         
         try{
             imp.create(producto);
-           Alert alert =new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Alta Exitosa");
-            alert.setHeaderText("Se ha agregado correctamente el producto!");
-            alert.showAndWait();
+            System.out.println("Producto agregado");
         } catch(Exception e){
             throw new Exception("Error al crear producto "+e.getMessage());
         }
-        colocarProductosTabla();
-        buscar();
+        
     }
     
     public void obtenerProducto(){
@@ -101,6 +100,72 @@ public class AdministradorProductoController implements Initializable {
         this.tabPrecio.setCellValueFactory(new PropertyValueFactory<>("Precio"));
         this.tvProducto.setItems(listaDeProductos);
     }
+    
+    
+    private void mostrarProducto(ProductoVO producto){
+        
+        if(producto!=null){
+            this.eID.setText(Integer.toString(producto.getId()));
+            this.eID.setEditable(false);
+            this.eNombre.setText(producto.getNombre());
+            this.eDesc.setText(producto.getDescripcion());
+            this.eCant.setText(Integer.toString(producto.getCantidad()));
+            this.ePrecio.setText(Integer.toString(producto.getPrecio()));
+            System.out.println("Ve a la pestaña 'Editar Producto'");
+        } else{
+            this.eNombre.setText("");
+            this.eDesc.setText("");
+            this.eCant.setText("");
+            this.ePrecio.setText("");
+        }
+    }
+    
+    public boolean getEdicion(){
+        return Edicion;
+    }
+    
+    @FXML
+    void colocarProducto(ActionEvent event) throws Exception {
+        productoEditar = this.tvProducto.getSelectionModel().getSelectedItem();
+        this.mostrarProducto(productoEditar);
+        this.Edicion = true;
+    }
+    
+    public boolean Editar(ProductoVO producto){
+        try{
+            return this.getEdicion();
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+    
+    @FXML
+    void editarProducto(ActionEvent event) throws Exception {
+        
+        productoEditar  = this.tvProducto.getSelectionModel().getSelectedItem();
+        if(productoEditar !=null){
+             boolean esEdicion = this.Editar(productoEditar);
+             if(esEdicion){
+                 int ultimo = this.tvProducto.getSelectionModel().getSelectedIndex();
+                 try{
+                     productoEditar.setId(Integer.parseInt(this.eID.getText()));
+                     productoEditar.setNombre(this.eNombre.getText());
+                     productoEditar.setDescripcion(this.eDesc.getText());
+                     productoEditar.setCantidad(Integer.parseInt(this.eCant.getText()));
+                     productoEditar.setPrecio(Integer.parseInt(this.ePrecio.getText()));
+                     this.imp.update(productoEditar);
+                     System.out.println("Producto editado");
+                 } catch(Exception e){
+                    System.out.println("Error al editar el producto");
+                   }
+             this.colocarProductosTabla();
+             this.tvProducto.getSelectionModel().select(productoEditar);
+             }
+        } else{
+            System.out.println("No se seleccionó un producto");
+        }
+    }
 
 
     @Override
@@ -108,52 +173,6 @@ public class AdministradorProductoController implements Initializable {
        this.imp = new Producto_DAO_IMP();
        this.listaDeProductos = FXCollections.observableArrayList();
        this.colocarProductosTabla();
-      buscar();
-    
     }    
-    
-   
-
-    public AdministradorProductoController() {
-    }
-    
-    
-    @FXML
-    private void searchEvent(MouseEvent event) {
-    }
-    //Buscar los productos con el textfield
-    private void buscar(){
-         FilteredList<ProductoVO> listaFiltrada = new FilteredList<>(listaDeProductos,b->true) ;
-       search.textProperty().addListener((observable,oldValue,newValue) -> {
-
-      listaFiltrada.setPredicate(productoaux -> {
-				// If filter text is empty, display all persons.
-								
-				if (newValue == null || newValue.isEmpty()) {
-					return true;
-				}
-				
-				// Compare first name and last name of every person with filter text.
-				String lowerCaseFilter = newValue.toLowerCase();
-				
-				if (productoaux.getNombre().toLowerCase().indexOf(lowerCaseFilter) != -1 ) {
-					return true; // Filter matches first name.
-				} else if (productoaux.getDescripcion().toLowerCase().indexOf(lowerCaseFilter) != -1) {
-					return true; // Filter matches last name.
-				}
-				     else  
-				    	 return false; // Does not match.
-			});
-		});
-       
-    
-		SortedList<ProductoVO> sortedData = new SortedList<>(listaFiltrada);
-		 sortedData = new SortedList<>(listaFiltrada);
-
-		sortedData.comparatorProperty().bind(tvProducto.comparatorProperty());
-		
-	
-		tvProducto.setItems(sortedData);
-    }
     
 }
