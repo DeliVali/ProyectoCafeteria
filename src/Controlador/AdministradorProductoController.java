@@ -4,12 +4,14 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTextField;
 import java.util.Iterator;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import modelo.ProductoVO;
@@ -30,20 +32,11 @@ public class AdministradorProductoController implements Initializable {
     private TextField tCant;
     @FXML
     private TextField tPrecio;
-    @FXML
     private TextField eNombre;
-    @FXML
     private TextField eCant;
-    @FXML
     private TextField ePrecio;
-    @FXML
     private TextArea eDesc;
-    @FXML
     private TextField eID;
-    @FXML
-    private JFXButton bEditarProducto;
-    @FXML
-    private JFXButton bEdit;
     @FXML
     private TableView<ProductoVO> tvProducto;
     @FXML
@@ -60,7 +53,26 @@ public class AdministradorProductoController implements Initializable {
     private Producto_DAO_IMP imp = new Producto_DAO_IMP();
     private ObservableList<ProductoVO> listaDeProductos;
     private ProductoVO productoEditar;
+    @FXML
+    private JFXTextField search;
+    @FXML
+    private JFXTextField txtBuscar;
+    @FXML
+    private JFXButton botonBuscar;
+    @FXML
+    private Label campoNombreBuscar;
+    @FXML
+    private Label campoDesBuscar;
+    @FXML
+    private Label campoPrecioBuscar;
+    @FXML
+    private Label campoIDBuscar;
+    @FXML
+    private Label campoCanBuscar;
+ private Producto_DAO_IMP implementacionBuscarDao = new Producto_DAO_IMP();
+    private ProductoVO productoBuscar = new ProductoVO();
 
+    //Termina lista de elementos buscar prodcutos
     @FXML
     void agregarProducto(ActionEvent event) throws Exception {
         producto.setNombre(tNombre.getText());
@@ -124,7 +136,6 @@ public class AdministradorProductoController implements Initializable {
         return Edicion;
     }
     
-    @FXML
     void colocarProducto(ActionEvent event) throws Exception {
         productoEditar = this.tvProducto.getSelectionModel().getSelectedItem();
         this.mostrarProducto(productoEditar);
@@ -140,7 +151,7 @@ public class AdministradorProductoController implements Initializable {
         return false;
     }
     
-    @FXML
+    
     void editarProducto(ActionEvent event) throws Exception {
         
         productoEditar  = this.tvProducto.getSelectionModel().getSelectedItem();
@@ -174,5 +185,43 @@ public class AdministradorProductoController implements Initializable {
        this.listaDeProductos = FXCollections.observableArrayList();
        this.colocarProductosTabla();
     }    
+
+    @FXML
+    private void buscar(ActionEvent event) {
+         int id = 0;
+        if (this.txtBuscar.getText().startsWith("1") || this.txtBuscar.getText().startsWith("2") || this.txtBuscar.getText().startsWith("3")
+                 || this.txtBuscar.getText().startsWith("4") || this.txtBuscar.getText().startsWith("5") || this.txtBuscar.getText().startsWith("6")
+                 || this.txtBuscar.getText().startsWith("7") || this.txtBuscar.getText().startsWith("8") || this.txtBuscar.getText().startsWith("9")
+                 || this.txtBuscar.getText().startsWith("0")){
+            id = Integer.parseInt(this.txtBuscar.getText());
+            try{
+                this.productoBuscar = this.implementacionBuscarDao.readId(id);
+                if (this.productoBuscar.getNombre()!=""){
+                    this.campoIDBuscar.setText(Integer.toString(productoBuscar.getId()));
+                    this.campoNombreBuscar.setText(productoBuscar.getNombre());
+                    this.campoDesBuscar.setText(productoBuscar.getDescripcion());
+                    this.campoCanBuscar.setText(Integer.toString(productoBuscar.getCantidad()));
+                    this.campoPrecioBuscar.setText(Integer.toString(productoBuscar.getPrecio()));
+                }else{
+                    this.txtBuscar.setText("producto inexistente");
+                    this.ocultarDatos();
+                }
+            }catch (Exception e){
+                System.out.println("Error al buscar producto "+ e);
+            }
+        }else{
+                this.txtBuscar.setText("Datos erroneos");
+                this.ocultarDatos();
+        }
+    }
+    
+    public void ocultarDatos(){
+        this.campoIDBuscar.setText("");
+        this.campoNombreBuscar.setText("");
+        this.campoDesBuscar.setText("");
+        this.campoCanBuscar.setText("");
+        this.campoPrecioBuscar.setText("");
+    }
+    
     
 }
