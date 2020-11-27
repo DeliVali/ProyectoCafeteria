@@ -45,7 +45,7 @@ public class Ventana_AdministradorFXML implements Initializable {
 
     @FXML
     private void boton_Horario(MouseEvent event) {
-        
+        cargarVentanas("/VentanaAux/AdministradorHorario");
     }
 
     @FXML

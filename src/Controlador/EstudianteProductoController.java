@@ -174,7 +174,7 @@ public class EstudianteProductoController implements Initializable {
         }
             
     }
-    /*
+    
     // Método de la reservación de productos
     @FXML
     void buscarProducto(ActionEvent event) throws Exception {
@@ -258,7 +258,7 @@ public class EstudianteProductoController implements Initializable {
             System.out.println("Error al buscar producto "+ e);
         }
     }
-    */
+    
     public void ocultarDatos(){
         this.campoNombreBuscar.setText("");
         this.campoDesBuscar.setText("");
@@ -266,16 +266,10 @@ public class EstudianteProductoController implements Initializable {
     }
     //Terminan métodos buscar producto
 
-    @FXML
-    private void buscarProducto(ActionEvent event) {
-    }
 
-    @FXML
-    private void reservarProducto(ActionEvent event) {
-    }
 
-    @FXML
-    private void buscar(ActionEvent event) {
-    }
+   
+
+
     
 }

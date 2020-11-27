@@ -84,4 +84,88 @@ public class Producto_DAO_IMP {
         }
         return actualizar;
     }
+    
+
+public ProductoVO read(String nombre) throws Exception {
+Connection con = null;
+Statement stm = null;
+ResultSet rs = null;
+String sql = "SELECT * FROM producto WHERE Nombre ='" + nombre + "'";
+
+ ProductoVO producto = new ProductoVO();
+
+ try {
+con = new ConexionDB().conectarMySQL();
+stm = con.createStatement();
+rs = stm.executeQuery(sql);
+while (rs.next()) {
+producto.setId(rs.getInt(1));
+producto.setNombre(rs.getString(2));
+producto.setDescripcion(rs.getString(3));
+producto.setCantidad(rs.getInt(4));
+producto.setPrecio(rs.getInt(5));
+}
+stm.close();
+rs.close();
+con.close();
+} catch (Exception e) {
+e.printStackTrace();
+}
+return producto;
+}
+
+public ProductoVO readId(int id) throws Exception {
+Connection con = null;
+Statement stm = null;
+ResultSet rs = null;
+String sql = "SELECT * FROM producto WHERE id ='" + id + "'";
+
+ ProductoVO producto = new ProductoVO();
+
+ try {
+con = new ConexionDB().conectarMySQL();
+stm = con.createStatement();
+rs = stm.executeQuery(sql);
+while (rs.next()) {
+producto.setId(rs.getInt(1));
+producto.setNombre(rs.getString(2));
+producto.setDescripcion(rs.getString(3));
+producto.setCantidad(rs.getInt(4));
+producto.setPrecio(rs.getInt(5));
+}
+stm.close();
+rs.close();
+con.close();
+} catch (Exception e) {
+e.printStackTrace();
+}
+return producto;
+}  
+
+
+public boolean reservar(int idProducto, String matricula) throws Exception{
+boolean reservado = false;
+Statement st;
+Connection conn;
+String sql = "INSERT INTO pedido values(NULL, '"+ matricula +"',"+"'"+ idProducto +"')";
+ConexionDB co = new ConexionDB();
+try{
+conn = co.conectarMySQL();
+st = conn.createStatement();
+st.execute(sql);
+reservado = true;
+st.close();
+conn.close();
+} catch(SQLException e){
+throw new Exception ("Error SQLException "+e.getMessage());
+} catch(NullPointerException e){
+throw new Exception("Error "+e.getMessage());
+} catch(Exception e){
+throw new Exception("Error "+e.getMessage());
+}
+return reservado;
+}
+
+
+
 }
