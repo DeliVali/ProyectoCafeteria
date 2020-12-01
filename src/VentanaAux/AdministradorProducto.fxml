@@ -21,7 +21,7 @@
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="362.0" prefWidth="700.0" style="-fx-background-color: #FFDBD9;">
                <children>
-                  <TableView fx:id="tvProducto" layoutX="1.0" layoutY="30.0" prefHeight="341.0" prefWidth="600.0" stylesheets="@TabColor.css">
+                  <TableView fx:id="tvProducto" layoutX="1.0" layoutY="30.0" prefHeight="286.0" prefWidth="600.0" stylesheets="@TabColor.css">
                     <columns>
                       <TableColumn fx:id="tabNombre" prefWidth="104.0" text="Nombre" />
                       <TableColumn fx:id="tabDesc" prefWidth="274.0" text="Descripción" />
@@ -31,6 +31,8 @@
                   </TableView>
                   <JFXTextField fx:id="search" focusColor="#4a407c" layoutX="85.0" layoutY="2.0" prefHeight="25.0" prefWidth="513.0" style="-fx-background-color: #ffffff; -fx-border-radius: 20px;" unFocusColor="#ffffff00" />
                   <Label layoutX="28.0" layoutY="6.0" prefHeight="17.0" prefWidth="38.0" text="Filtrar" />
+                  <JFXButton fx:id="bEdit" layoutX="131.0" layoutY="329.0" onAction="#colocarProducto" style="-fx-background-color: #F9A29C;" text="Editar" />
+                  <JFXButton fx:id="bEliminar" layoutX="424.0" layoutY="329.0" onAction="#eliminarProducto" style="-fx-background-color: #F9A29C;" text="Eliminar" />
                </children></AnchorPane>
         </content>
       </Tab>
@@ -129,6 +131,44 @@
                   </GridPane>
                </children>
             </AnchorPane>
+        </content>
+      </Tab>
+      <Tab text="Editar Producto">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #FFDBD9;">
+               <children>
+                  <TextField fx:id="eNombre" layoutX="180.0" layoutY="39.0" />
+                  <TextField fx:id="eCant" layoutX="179.0" layoutY="191.0" />
+                  <TextField fx:id="ePrecio" layoutX="180.0" layoutY="255.0" />
+                  <TextArea fx:id="eDesc" layoutX="178.0" layoutY="78.0" prefHeight="80.0" prefWidth="151.0" />
+                  <Label layoutX="70.0" layoutY="43.0" text="Nombre:">
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="60.0" layoutY="101.0" text="Descripción:">
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="67.0" layoutY="195.0" text="Cantidad:">
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="75.0" layoutY="259.0" text="Precio:">
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font>
+                  </Label>
+                  <JFXButton fx:id="bEditarProducto" layoutX="406.0" layoutY="315.0" onAction="#editarProducto" prefHeight="35.0" prefWidth="148.0" style="-fx-background-color: #F9A29C;" text="Guardar" />
+                  <Label layoutX="382.0" layoutY="43.0" text="ID:">
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="eID" layoutX="416.0" layoutY="39.0" prefHeight="25.0" prefWidth="80.0" />
+               </children></AnchorPane>
         </content>
       </Tab>
    </tabs>
