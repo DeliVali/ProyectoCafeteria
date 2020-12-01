@@ -85,6 +85,25 @@ public class Producto_DAO_IMP {
         return actualizar;
     }
     
+    public boolean delete(ProductoVO producto) throws Exception{
+        Connection con = null;
+        Statement stm = null;
+        
+        boolean eliminar = false;
+        
+        String sql = "DELETE FROM producto WHERE ID =" + producto.getId();
+        try{
+            con = new ConexionDB().conectarMySQL();
+            stm = con.createStatement();
+            eliminar = stm.execute(sql);
+        } catch(SQLException e){
+            throw new Exception ("Error en el delete SQLException " + e.getCause().toString());
+          } catch (Exception e){
+              throw new Exception ("Error en el delete Exception " + e.getMessage().toString());
+          }
+        return eliminar;
+    }
+    
 
 public ProductoVO read(String nombre) throws Exception {
 Connection con = null;
@@ -165,6 +184,8 @@ throw new Exception("Error "+e.getMessage());
 }
 return reservado;
 }
+
+
 
 
 
