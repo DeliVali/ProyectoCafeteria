@@ -32,10 +32,15 @@ public class AdministradorProductoController implements Initializable {
     private TextField tCant;
     @FXML
     private TextField tPrecio;
+    @FXML
     private TextField eNombre;
+    @FXML
     private TextField eCant;
+    @FXML
     private TextField ePrecio;
+    @FXML
     private TextArea eDesc;
+    @FXML
     private TextField eID;
     @FXML
     private TableView<ProductoVO> tvProducto;
@@ -69,6 +74,8 @@ public class AdministradorProductoController implements Initializable {
     private Label campoIDBuscar;
     @FXML
     private Label campoCanBuscar;
+    @FXML
+    private JFXButton bEliminar;
  private Producto_DAO_IMP implementacionBuscarDao = new Producto_DAO_IMP();
     private ProductoVO productoBuscar = new ProductoVO();
 
@@ -136,6 +143,7 @@ public class AdministradorProductoController implements Initializable {
         return Edicion;
     }
     
+    @FXML
     void colocarProducto(ActionEvent event) throws Exception {
         productoEditar = this.tvProducto.getSelectionModel().getSelectedItem();
         this.mostrarProducto(productoEditar);
@@ -151,7 +159,7 @@ public class AdministradorProductoController implements Initializable {
         return false;
     }
     
-    
+    @FXML
     void editarProducto(ActionEvent event) throws Exception {
         
         productoEditar  = this.tvProducto.getSelectionModel().getSelectedItem();
@@ -175,6 +183,25 @@ public class AdministradorProductoController implements Initializable {
              }
         } else{
             System.out.println("No se seleccionó un producto");
+        }
+    }
+    
+    @FXML
+    void eliminarProducto(ActionEvent event) {
+        int selectedIndex = this.tvProducto.getSelectionModel().getSelectedIndex();
+        if(selectedIndex >= 0){
+            ProductoVO producto = this.tvProducto.getSelectionModel().getSelectedItem();
+            this.tvProducto.getSelectionModel().selectLast();
+            try{
+                this.imp.delete(producto);
+            } catch(Exception e){
+                System.out.println("Error al eliminar");
+            }
+            this.colocarProductosTabla();
+            if(selectedIndex != 0){
+                selectedIndex--;
+                this.tvProducto.getSelectionModel().select(selectedIndex);
+            }
         }
     }
 
