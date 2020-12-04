@@ -9,6 +9,8 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
+import java.util.Iterator;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,6 +20,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import modelo.MenuVO;
 import modelo.Menu_DAO_IMP;
 import modelo.Sugerir_Menu;
@@ -37,6 +42,22 @@ Sugerir_Menu_DAO_IMP implementacionSugerirDAO=new Sugerir_Menu_DAO_IMP();
     private JFXTextArea textArea_SUME;
     @FXML
     private ChoiceBox<String> tipo_Menu_SUME;
+    
+    
+    //Elementos ver Menú
+    @FXML
+    private TableView<MenuVO> tablaMenu;
+    @FXML
+    private TableColumn<MenuVO, String> colNombre;
+    @FXML
+    private TableColumn<MenuVO, String> colDes;
+    @FXML
+    private TableColumn<MenuVO, String> colTipo;
+    @FXML
+    private TableColumn<MenuVO, String> colDia;
+    @FXML
+    private TableColumn<MenuVO, Integer> colPrecio;
+    private ObservableList<MenuVO> listaMenus;
     
     
     //Elementos buscar Menú
@@ -64,6 +85,8 @@ Sugerir_Menu_DAO_IMP implementacionSugerirDAO=new Sugerir_Menu_DAO_IMP();
         ObservableList <String> listaTipo= FXCollections.observableArrayList("Desayuno","Merienda","Comida");
         tipo_Menu_SUME.setItems(listaTipo);
         ocultarDatos();
+        this.listaMenus = FXCollections.observableArrayList();
+        this.colocarMenusTabla();
     }    
 //Sugerir Menu
     @FXML
@@ -95,6 +118,31 @@ Sugerir_Menu_DAO_IMP implementacionSugerirDAO=new Sugerir_Menu_DAO_IMP();
         }
     }
     
+    
+    //Metodos ver Menú
+    public void obtenerMenus(){
+        List listaConsulta =null;
+        try{
+            listaConsulta = this.implementacionBuscarDao.readAll();
+        }catch (Exception e){
+            System.out.println("Error al leer la consulta");
+        }
+        Iterator it=listaConsulta.iterator();
+        this.listaMenus.clear();
+        while(it.hasNext()){
+            listaMenus.add((MenuVO)it.next());
+        }
+    }
+    
+    public void colocarMenusTabla(){
+        this.obtenerMenus();
+        this.colNombre.setCellValueFactory(new PropertyValueFactory<>("Nombre"));
+        this.colDes.setCellValueFactory(new PropertyValueFactory<>("Descripcion"));
+        this.colTipo.setCellValueFactory(new PropertyValueFactory<>("Tipo"));
+        this.colDia.setCellValueFactory(new PropertyValueFactory<>("Dia"));
+        this.colPrecio.setCellValueFactory(new PropertyValueFactory<>("Precio"));
+        this.tablaMenu.setItems(listaMenus);
+    }
     
     //Metodos Buscar Menu
     @FXML
