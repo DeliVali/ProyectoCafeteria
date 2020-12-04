@@ -104,8 +104,6 @@ public class AdminUsuarioController implements Initializable {
     @FXML
     private JFXRadioButton radioEstudiante;
     @FXML
-    private JFXButton botonCancelarUsu;
-    @FXML
     private JFXButton botonAgregarUsu;
     @FXML
     private JFXTextField nombreField;
@@ -113,6 +111,8 @@ public class AdminUsuarioController implements Initializable {
     private JFXTextField contraField;
     @FXML
     private JFXTextField matriculaField;
+    @FXML
+    private JFXButton btnEliminarUsu;
     
     
     
@@ -166,11 +166,30 @@ public class AdminUsuarioController implements Initializable {
          } catch (Exception ex) {
              System.out.println("Error al editar usuario");
          }
+         colocarUsuariosTabla();
     }
 
     @FXML
     void desbloquearUsuario(ActionEvent event) {
-
+        
+        String matricula = txtMatricula.getText();
+         
+        try{
+            if(!this.implementacionDAO.desbloqueo(matricula)){
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Desbloqueo de usuario");
+                alert.setHeaderText("El usuario ha sido desbloqueado");
+                alert.showAndWait();
+            }else{
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Desbloqueo de usuario");
+                alert.setHeaderText("No se pudo desbloquear al usuario");
+                alert.showAndWait();
+             }
+        } catch (Exception ex) {
+             System.out.println("Error al desbloquear usuario");
+         }
+        colocarUsuariosTabla();
     }
     
     @FXML
@@ -252,6 +271,7 @@ public class AdminUsuarioController implements Initializable {
             alert.setTitle("Alta Exitosa");
             alert.setHeaderText("Se ha agregado correctamente el Usuario!");
             alert.showAndWait();
+            colocarUsuariosTabla();
                 } catch (Exception ex) {
                      Alert alert =new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
@@ -268,10 +288,35 @@ public class AdminUsuarioController implements Initializable {
                 
             }
         }
-        
+        colocarUsuariosTabla();
+    }
+
+    @FXML
+    private void eventEliminarUsu(ActionEvent event) {
+        UsuariosVO usuarioSelect = this.tablaUsuarios.getSelectionModel().getSelectedItem();
+        if(usuarioSelect!=null){
+            try {
+                implementacionDAO.delete(usuarioSelect);
+                  Alert alert =new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Terminado");
+            alert.setHeaderText("El usuario se ha eliminado con exito");
+            alert.showAndWait();
+            } catch (Exception ex) {
+                Alert alert =new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("ERROR");
+            alert.setHeaderText("No se ha podido eliminar el usuario");
+            alert.showAndWait();
+            }
+    }else{
+              Alert alert =new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("ERROR");
+            alert.setHeaderText("Por favor seleccione un usuario");
+            alert.showAndWait();
+        }
+        colocarUsuariosTabla();
     }
     
     
-    
+   
     
 }
