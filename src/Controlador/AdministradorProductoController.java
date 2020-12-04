@@ -9,6 +9,8 @@ import java.util.Iterator;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -93,7 +95,8 @@ public class AdministradorProductoController implements Initializable {
         } catch(Exception e){
             throw new Exception("Error al crear producto "+e.getMessage());
         }
-        
+        colocarProductosTabla();
+        filtrar();
     }
     
     public void obtenerProducto(){
@@ -203,6 +206,8 @@ public class AdministradorProductoController implements Initializable {
                 this.tvProducto.getSelectionModel().select(selectedIndex);
             }
         }
+        colocarProductosTabla();
+        filtrar();
     }
 
 
@@ -211,6 +216,7 @@ public class AdministradorProductoController implements Initializable {
        this.imp = new Producto_DAO_IMP();
        this.listaDeProductos = FXCollections.observableArrayList();
        this.colocarProductosTabla();
+       filtrar();
     }    
 
     @FXML
@@ -248,6 +254,40 @@ public class AdministradorProductoController implements Initializable {
         this.campoDesBuscar.setText("");
         this.campoCanBuscar.setText("");
         this.campoPrecioBuscar.setText("");
+    }
+    
+    private void filtrar(){
+         FilteredList<ProductoVO> listaFiltrada = new FilteredList<>(listaDeProductos,b->true) ;
+       search.textProperty().addListener((observable,oldValue,newValue) -> {
+
+      listaFiltrada.setPredicate(productoaux -> {
+				// If filter text is empty, display all persons.
+
+				if (newValue == null || newValue.isEmpty()) {
+					return true;
+				}
+
+				// Compare first name and last name of every person with filter text.
+				String lowerCaseFilter = newValue.toLowerCase();
+
+				if (productoaux.getNombre().toLowerCase().indexOf(lowerCaseFilter) != -1 ) {
+					return true; // Filter matches first name.
+				} else if (productoaux.getDescripcion().toLowerCase().indexOf(lowerCaseFilter) != -1) {
+					return true; // Filter matches last name.
+				}
+				     else  
+				    	 return false; // Does not match.
+			});
+		});
+
+
+		SortedList<ProductoVO> sortedData = new SortedList<>(listaFiltrada);
+		 sortedData = new SortedList<>(listaFiltrada);
+
+		sortedData.comparatorProperty().bind(tvProducto.comparatorProperty());
+
+
+		tvProducto.setItems(sortedData);
     }
     
     

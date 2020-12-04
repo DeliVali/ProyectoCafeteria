@@ -22,7 +22,27 @@ public class Usuarios_DAO_Imp implements Usuario_DAO{
     
     @Override
     public boolean create(UsuariosVO usuario) throws Exception {
-        return false;
+         boolean created = false;
+        Statement stm;
+        Connection con;
+        String sql = "INSERT INTO usuario values('"+usuario.getMatricula()+" ','"+usuario.getNombre()+"',"+"'"+usuario.getPass()+"',"
+                +usuario.isTipo()+","+usuario.isBloqueo()+");";
+        ConexionDB cc = new ConexionDB();
+        try {
+            con = cc.conectarMySQL();
+            stm = con.createStatement();
+            stm.execute(sql);
+            created = true;
+            stm.close();
+            con.close();
+        } catch (SQLException e) {
+           throw new Exception ("Error en create SQLException "+e.getMessage());
+        } catch (NullPointerException e){
+            throw new Exception("Error en create objeto null "+e.getMessage());
+        }catch (Exception e){
+            throw new Exception("Error en create "+e.getMessage());
+        }
+        return created;
     
     }
       
@@ -161,7 +181,20 @@ public class Usuarios_DAO_Imp implements Usuario_DAO{
 
     @Override
     public boolean delete(UsuariosVO usuario) throws Exception{
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Connection connect ;
+        Statement stm ;
+
+        boolean eliminar = false;
+
+        String sql = "DELETE FROM usuario WHERE matricula = " + usuario.getMatricula();
+        try {
+            connect = new ConexionDB().conectarMySQL();
+            stm = connect.createStatement();
+            eliminar = stm.execute(sql);
+        } catch (SQLException e) {
+             throw new Exception ("Error en delete SQLException "+e.getCause().toString());
+        }
+        return eliminar;
     }
 
     @Override
