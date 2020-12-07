@@ -6,19 +6,18 @@
 package Controlador;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -31,24 +30,58 @@ import modelo.Menu_DAO_IMP;
  * @author jeffr
  */
 public class AdministradorMenuController implements Initializable {
-
-    //Elementos ver Menú
-    @FXML
-    private TableView<MenuVO> tablaMenu;
-    @FXML
-    private TableColumn<MenuVO, Integer> colID;
-    @FXML
-    private TableColumn<MenuVO, String> colNombre;
-    @FXML
-    private TableColumn<MenuVO, String> colDes;
-    @FXML
-    private TableColumn<MenuVO, String> colTipo;
-    @FXML
-    private TableColumn<MenuVO, String> colDia;
-    @FXML
-    private TableColumn<MenuVO, Integer> colPrecio;
-    private ObservableList<MenuVO> listaMenus;
     
+    //Agregar menú
+    @FXML
+    private JFXTextField txtNombreMenuAdd;
+
+    @FXML
+    private JFXTextArea txtDescMenuAdd;
+
+    @FXML
+    private JFXTextField txtTipoMenuAdd;
+
+    @FXML
+    private JFXTextField txtDiaMenuAdd;
+
+    @FXML
+    private JFXTextField intPrecioMenuAdd;
+
+    @FXML
+    private JFXButton btnGuardarMenuAdd;
+
+    @FXML
+    private JFXButton btnCancelarMenuAdd;
+
+    //Editar menú
+    @FXML
+    private JFXTextField txtNombreMenuEdit;
+
+    @FXML
+    private JFXTextField txtTipoMenuEdit;
+
+    @FXML
+    private JFXTextArea txtDescMenuEdit;
+
+    @FXML
+    private JFXTextField txtDiaMenuEdit;
+
+    @FXML
+    private JFXTextField txtPrecioMenuEdit;
+
+    @FXML
+    private JFXButton btnCancelarMenuEdit;
+
+    @FXML
+    private JFXButton btnGuardarMenuEdit;
+
+    @FXML
+    private JFXButton btnBuscarMenuEdit;
+    
+    
+    private MenuVO menu = new MenuVO();
+    private Menu_DAO_IMP imp = new Menu_DAO_IMP();
+    private ObservableList<MenuVO> listaMenus;
     
     //Elementos buscar Menú
     @FXML
@@ -71,31 +104,50 @@ public class AdministradorMenuController implements Initializable {
     private MenuVO menuBuscar = new MenuVO();
     //Termina lista de elementos buscar Menú
     
-    //Metodos ver Menú
-    public void obtenerMenus(){
-        List listaConsulta =null;
+    //Métodos agregar menú
+    @FXML
+    void agregarMenu(ActionEvent event) throws Exception {
+        menu.setNombre(txtNombreMenuAdd.getText());
+        menu.setDescripcion(txtDescMenuAdd.getText());
+        menu.setTipo(txtTipoMenuAdd.getText());
+        menu.setDia(txtDiaMenuAdd.getText());
+        menu.setPrecio(Integer.parseInt(intPrecioMenuAdd.getText()));
+        
         try{
-            listaConsulta = this.implementacionBuscarDao.readAll();
-        }catch (Exception e){
-            System.out.println("Error al leer la consulta");
+            imp.create(menu);
+            Alert alert =new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Agregado!");
+            alert.setHeaderText("Se ha agregado correctamente el menú!");
+            alert.showAndWait();
+        } catch(Exception e){
+            throw new Exception("Error al agregar menú "+e.getMessage());
         }
-        Iterator it=listaConsulta.iterator();
-        this.listaMenus.clear();
-        while(it.hasNext()){
-            listaMenus.add((MenuVO)it.next());
-        }
+        //colocarMenuTabla();
     }
     
-    public void colocarMenusTabla(){
-        this.obtenerMenus();
-        this.colID.setCellValueFactory(new PropertyValueFactory<>("Id"));
-        this.colNombre.setCellValueFactory(new PropertyValueFactory<>("Nombre"));
-        this.colDes.setCellValueFactory(new PropertyValueFactory<>("Descripcion"));
-        this.colTipo.setCellValueFactory(new PropertyValueFactory<>("Tipo"));
-        this.colDia.setCellValueFactory(new PropertyValueFactory<>("Dia"));
-        this.colPrecio.setCellValueFactory(new PropertyValueFactory<>("Precio"));
-        this.tablaMenu.setItems(listaMenus);
+    public void obtenerMenu(){
+        List listaConsulta = null;
+        try{
+            listaConsulta = imp.readAll();
+        } catch(Exception e){
+            System.out.println("Error al leer la consulta");
+        }
+        Iterator it = listaConsulta.iterator();
+        listaMenus.clear();
+        while(it.hasNext()){
+           listaMenus.add((MenuVO)it.next());
+        }
+    
     }
+    
+    /*public void colocarMenuTabla(){
+        this.obtenerMenu();
+        this.tabNombre.setCellValueFactory(new PropertyValueFactory<>("Nombre"));
+        this.tabDesc.setCellValueFactory(new PropertyValueFactory<>("Descripcion"));
+        this.tabCanti.setCellValueFactory(new PropertyValueFactory<>("Cantidad"));
+        this.tabPrecio.setCellValueFactory(new PropertyValueFactory<>("Precio"));
+        this.tvProducto.setItems(listaDeProductos);
+    }*/
     
     //Metodos Buscar Menu
     public void ocultarDatos(){
@@ -140,8 +192,6 @@ public class AdministradorMenuController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         this.ocultarDatos();
-        this.listaMenus = FXCollections.observableArrayList();
-        this.colocarMenusTabla();
     }    
 
     

@@ -3,7 +3,6 @@ package modelo;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,33 +18,7 @@ public class Menu_DAO_IMP implements Menu_DAO{
 
     @Override
     public List<MenuVO> readAll() throws Exception {
-        Connection con = null;
-        Statement stm = null;
-        ResultSet rs = null;
-        String sql = "SELECT * FROM menu order by id";
-        
-        List<MenuVO> lista = new ArrayList<MenuVO>();
-        
-        try {
-            con = new ConexionDB().conectarMySQL();
-            stm = con.createStatement();
-            rs = stm.executeQuery(sql);
-            
-            while (rs.next()) {
-                
-                MenuVO m = new MenuVO(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getInt(6));
-                
-                lista.add(m);
-            }
-            stm.close();
-            rs.close();
-            con.close();
-        } catch (Exception e) {
-           //System.out.println("Error al buscar usuario");
-           e.printStackTrace();
-        }
-        
-        return lista;
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override

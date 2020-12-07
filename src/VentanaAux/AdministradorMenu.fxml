@@ -2,11 +2,10 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTabPane?>
+<?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -17,19 +16,122 @@
    <tabs>
       <Tab text="Menu">
         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #E7CA9A;">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #E7CA9A;" />
+        </content>
+      </Tab>
+      <Tab text="Agregar menú">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <TableView fx:id="tablaMenu" layoutX="-1.0" layoutY="37.0" prefHeight="279.0" prefWidth="600.0">
-                    <columns>
-                      <TableColumn fx:id="colID" prefWidth="46.0" text="ID" />
-                      <TableColumn fx:id="colNombre" prefWidth="119.0" text="Nombre" />
-                        <TableColumn fx:id="colDes" prefWidth="232.0" text="Descripción" />
-                        <TableColumn fx:id="colTipo" prefWidth="60.0" text="Tipo" />
-                        <TableColumn fx:id="colDia" prefWidth="65.0" text="Dia" />
-                        <TableColumn fx:id="colPrecio" prefWidth="76.0" text="Precio" />
-                    </columns>
-                  </TableView>
-               </children></AnchorPane>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="368.0" prefWidth="600.0" style="-fx-background-color: #E7CA9A;">
+                     <children>
+                        <Label layoutX="45.0" layoutY="35.0" text="Nombre:">
+                           <font>
+                              <Font name="System Bold Italic" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="43.0" layoutY="84.0" text="Descripción:">
+                           <font>
+                              <Font name="System Bold Italic" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="42.0" layoutY="176.0" text="Tipo:">
+                           <font>
+                              <Font name="System Bold Italic" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="333.0" layoutY="176.0" text="Día:">
+                           <font>
+                              <Font name="System Bold Italic" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="45.0" layoutY="235.0" text="Precio:">
+                           <font>
+                              <Font name="System Bold Italic" size="12.0" />
+                           </font>
+                        </Label>
+                        <JFXTextField fx:id="txtNombreMenuAdd" layoutX="128.0" layoutY="31.0" prefHeight="25.0" prefWidth="210.0" />
+                        <JFXTextArea fx:id="txtDescMenuAdd" layoutX="128.0" layoutY="84.0" prefHeight="66.0" prefWidth="418.0" />
+                        <JFXTextField fx:id="txtTipoMenuAdd" layoutX="128.0" layoutY="172.0" />
+                        <JFXTextField fx:id="txtDiaMenuAdd" layoutX="411.0" layoutY="172.0" />
+                        <JFXTextField fx:id="intPrecioMenuAdd" layoutX="128.0" layoutY="231.0" />
+                        <JFXButton fx:id="btnGuardarMenuAdd" buttonType="RAISED" layoutX="187.0" layoutY="309.0" ripplerFill="BLACK" text="Guardar">
+                           <font>
+                              <Font name="System Bold Italic" size="13.0" />
+                           </font>
+                        </JFXButton>
+                        <JFXButton fx:id="btnCancelarMenuAdd" buttonType="RAISED" layoutX="345.0" layoutY="309.0" text="Cancelar">
+                           <font>
+                              <Font name="System Bold Italic" size="13.0" />
+                           </font>
+                        </JFXButton>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
+        </content>
+      </Tab>
+      <Tab text="Editar menú">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="368.0" prefWidth="600.0" style="-fx-background-color: #E7CA9A;">
+                     <children>
+                        <Label layoutX="50.0" layoutY="62.0" text="Nombre:">
+                           <font>
+                              <Font name="System Bold Italic" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="48.0" layoutY="111.0" text="Descripción:">
+                           <font>
+                              <Font name="System Bold Italic" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="48.0" layoutY="217.0" text="Tipo:">
+                           <font>
+                              <Font name="System Bold Italic" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="372.0" layoutY="221.0" text="Día:">
+                           <font>
+                              <Font name="System Bold Italic" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="48.0" layoutY="269.0" text="Precio:">
+                           <font>
+                              <Font name="System Bold Italic" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="47.0" layoutY="25.0" text="ID del menú a editar:">
+                           <font>
+                              <Font name="System Bold Italic" size="12.0" />
+                           </font>
+                        </Label>
+                        <JFXTextField fx:id="txtNombreMenuEdit" layoutX="195.0" layoutY="21.0" prefHeight="25.0" prefWidth="210.0" />
+                        <JFXTextField fx:id="txtNombreMenuEdit" layoutX="134.0" layoutY="58.0" />
+                        <JFXTextField fx:id="txtTipoMenuEdit" layoutX="135.0" layoutY="213.0" />
+                        <JFXTextArea fx:id="txtDescMenuEdit" layoutX="134.0" layoutY="112.0" prefHeight="81.0" prefWidth="430.0" />
+                        <JFXTextField fx:id="txtDiaMenuEdit" layoutX="430.0" layoutY="217.0" />
+                        <JFXTextField fx:id="txtPrecioMenuEdit" layoutX="135.0" layoutY="265.0" />
+                        <JFXButton fx:id="btnCancelarMenuEdit" buttonType="RAISED" layoutX="342.0" layoutY="325.0" ripplerFill="BLACK" text="Cancelar">
+                           <font>
+                              <Font name="System Bold Italic" size="13.0" />
+                           </font>
+                        </JFXButton>
+                        <JFXButton fx:id="btnGuardarMenuEdit" buttonType="RAISED" layoutX="211.0" layoutY="326.0" ripplerFill="BLACK" text="Guardar">
+                           <font>
+                              <Font name="System Bold Italic" size="13.0" />
+                           </font>
+                        </JFXButton>
+                        <JFXButton fx:id="btnBuscarMenuEdit" buttonType="RAISED" layoutX="430.0" layoutY="19.0" ripplerFill="BLACK" text="Buscar">
+                           <font>
+                              <Font name="System Bold Italic" size="13.0" />
+                           </font>
+                        </JFXButton>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
         </content>
       </Tab>
       <Tab text="Buscar Menu">
