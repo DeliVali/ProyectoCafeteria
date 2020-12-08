@@ -14,9 +14,15 @@
    <tabs>
       <Tab text="Horarios">
         <content>
+
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="600.0" style="-fx-background-color: #FFDBD9;">
                <children>
                   <TableView fx:id="tablaHorarios" prefHeight="368.0" prefWidth="600.0" style="-fx-background-color: #FFDBD9;">
+
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #FFDBD9;">
+               <children>
+                  <TableView fx:id="tablaHorarios" prefHeight="368.0" prefWidth="600.0">
+
                     <columns>
                       <TableColumn fx:id="columnaId" prefWidth="157.0" text="ID" />
                       <TableColumn fx:id="columnaDia" prefWidth="143.0" text="Día" />

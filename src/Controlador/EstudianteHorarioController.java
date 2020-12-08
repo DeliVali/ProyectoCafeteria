@@ -20,10 +20,16 @@ import modelo.Horario_DAO_Imp;
  * @author jeffr
  */
 public class EstudianteHorarioController implements Initializable {
+
     private ObservableList<Horario_Atencion_VO> listaDeHorarios;
     
     private Horario_Atencion_VO horario_atencion =new Horario_Atencion_VO();
     
+
+    
+    private ObservableList<Horario_Atencion_VO> listaDeHorarios;
+    private Horario_Atencion_VO horario_atencion =new Horario_Atencion_VO();
+
     private Horario_DAO_Imp implementacionDAO = new Horario_DAO_Imp();
     
     public void obtenerHorarios(){
@@ -39,7 +45,7 @@ public class EstudianteHorarioController implements Initializable {
             listaDeHorarios.add((Horario_Atencion_VO)it.next());
         }
     }
-    
+
     /**
      * Initializes the controller class.
      */

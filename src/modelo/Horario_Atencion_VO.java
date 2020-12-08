@@ -27,6 +27,8 @@ public class Horario_Atencion_VO {
 
     public Horario_Atencion_VO() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+      
+
     }
     
     //Metodos

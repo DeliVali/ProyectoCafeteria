@@ -10,6 +10,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -35,12 +36,17 @@ public class Ventana_AdministradorFXML implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
+    }
 
     @FXML
     private void boton_Pro(MouseEvent event) {
         cargarVentanas("/VentanaAux/AdministradorProducto");
-        
+
+    }
+
+    @FXML
+    private void boton_Menu(MouseEvent event) {
+        cargarVentanas("/VentanaAux/AdministradorMenu");
     }
 
     @FXML
@@ -49,40 +55,31 @@ public class Ventana_AdministradorFXML implements Initializable {
     }
 
     @FXML
-    private void boton_Menu(MouseEvent event) {
-        cargarVentanas("/VentanaAux/AdministradorMenu");
-    }
-
-     @FXML
     private void boton_Usu(MouseEvent event) {
         cargarVentanas("/VentanaAux/AdminUsuario");
     }
-    
-      private void cargarVentanas(String ui){
+
+    private void cargarVentanas(String ui) {
         Parent root = null;
         try {
-           root= FXMLLoader.load(getClass().getResource(ui+".fxml"));
+            root = FXMLLoader.load(getClass().getResource(ui + ".fxml"));
         } catch (IOException ex) {
             //Logger.getLogger(Ventana_EstudiantesFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
         borderPane.setCenter(root);
     }
-    
-    
+
     @FXML
     private void boton_Salir(MouseEvent event) {
         cerrarVentana(event);
         CerrarSesión al = new CerrarSesión();
         al.cs();
     }
-    
-            public void cerrarVentana(MouseEvent event){
-        Node  source = (Node)  event.getSource(); 
-    Stage stage  = (Stage) source.getScene().getWindow();
-    stage.close();
+
+    public void cerrarVentana(MouseEvent event) {
+        Node source = (Node) event.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
+        stage.close();
     }
 
-   
-    
-    
 }
