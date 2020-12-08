@@ -26,7 +26,7 @@
                         <TableView fx:id="tablaUsuarios" layoutX="-3.0" prefHeight="329.0" prefWidth="607.0" stylesheets="@TabUsuario.css">
                            <columns>
                               <TableColumn fx:id="columnaMatricula" prefWidth="112.0" text="Matrícula" />
-                              <TableColumn fx:id="columnaNombre" prefWidth="223.0" text="Nombre" />
+                              <TableColumn fx:id="columnaNombre" prefWidth="223.0" text="Nombre completo" />
                               <TableColumn fx:id="columnaPass" prefWidth="125.0" text="Contraseña" />
                               <TableColumn fx:id="columnaTipo" prefWidth="67.0" text="Tipo" />
                               <TableColumn fx:id="columnaBloqueo" minWidth="3.0" prefWidth="72.0" text="Bloqueo" />
@@ -69,7 +69,7 @@
                                     <Font size="18.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="15.0" layoutY="226.0" text="Bloqueo de usuario">
+                              <Label layoutX="15.0" layoutY="226.0" text="Estado de bloqueo">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
@@ -77,7 +77,7 @@
                               <Button fx:id="btnBloquearUsuario" layoutX="219.0" layoutY="253.0" mnemonicParsing="false" onAction="#bloquearUsuario" prefHeight="27.0" prefWidth="183.0" text="Bloquear usuario" textFill="#e11111" />
                               <ButtonBar layoutX="130.0" layoutY="307.0" prefHeight="40.0" prefWidth="452.0">
                                  <buttons>
-                                    <Button fx:id="btnGuardarEdicion" mnemonicParsing="false" onAction="#guardarEdicion" prefHeight="25.0" prefWidth="120.0" text="Guardar edición" />
+                                    <Button fx:id="btnGuardarEdicion" defaultButton="true" mnemonicParsing="false" onAction="#guardarEdicion" prefHeight="25.0" prefWidth="120.0" text="Guardar edición" />
                                  </buttons>
                               </ButtonBar>
                               <Label layoutX="218.0" layoutY="157.0" text="Tipo de usuario">
@@ -97,19 +97,33 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #788EDE;">
                      <children>
-                        <JFXTextField fx:id="nombreField" layoutX="134.0" layoutY="96.0" prefHeight="25.0" prefWidth="310.0" style="-fx-background-color: #ffffff;" />
-                        <Label layoutX="238.0" layoutY="79.0" text="Nombre de usuario" />
-                        <JFXTextField fx:id="contraField" layoutX="134.0" layoutY="151.0" prefHeight="25.0" prefWidth="310.0" style="-fx-background-color: #ffffff;" />
-                        <Label layoutX="259.0" layoutY="121.0" text="Contraseña" />
-                        <JFXRadioButton fx:id="radioAdmin" layoutX="135.0" layoutY="217.0" text="Administrador">
+                        <JFXTextField fx:id="nombreField" layoutX="24.0" layoutY="126.0" prefHeight="27.0" prefWidth="519.0" style="-fx-background-color: #ffffff;" />
+                        <Label layoutX="24.0" layoutY="99.0" text="Nombre completo">
+                           <font>
+                              <Font size="18.0" />
+                           </font></Label>
+                        <JFXTextField fx:id="contraField" layoutX="24.0" layoutY="205.0" prefHeight="27.0" prefWidth="519.0" style="-fx-background-color: #ffffff;" />
+                        <Label layoutX="22.0" layoutY="171.0" text="Contraseña">
+                           <font>
+                              <Font size="18.0" />
+                           </font></Label>
+                        <JFXRadioButton fx:id="radioAdmin" layoutX="26.0" layoutY="288.0" text="Administrador">
                            <toggleGroup>
                               <ToggleGroup fx:id="tipoUsuario" />
                            </toggleGroup>
                         </JFXRadioButton>
-                        <JFXRadioButton fx:id="radioEstudiante" layoutX="361.0" layoutY="217.0" text="Estudiante" toggleGroup="$tipoUsuario" />
-                        <JFXButton fx:id="botonAgregarUsu" layoutX="403.0" layoutY="275.0" onAction="#eventoAgregarUsu" text="Agregar" />
-                        <JFXTextField fx:id="matriculaField" layoutX="135.0" layoutY="54.0" prefHeight="25.0" prefWidth="310.0" style="-fx-background-color: #ffffff;" />
-                        <Label layoutX="261.0" layoutY="27.0" prefHeight="17.0" prefWidth="56.0" text="Matricula" />
+                        <JFXRadioButton fx:id="radioEstudiante" layoutX="201.0" layoutY="288.0" text="Estudiante" toggleGroup="$tipoUsuario" />
+                        <JFXButton fx:id="botonAgregarUsu" defaultButton="true" layoutX="442.0" layoutY="311.0" onAction="#eventoAgregarUsu" text="Agregar usuario" />
+                        <JFXTextField fx:id="matriculaField" layoutX="24.0" layoutY="63.0" prefHeight="27.0" prefWidth="519.0" style="-fx-background-color: #ffffff;" />
+                        <Label layoutX="26.0" layoutY="27.0" prefHeight="27.0" prefWidth="82.0" text="Matrícula">
+                           <font>
+                              <Font size="18.0" />
+                           </font></Label>
+                        <Label layoutX="26.0" layoutY="243.0" text="Tipo de usuario">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
                      </children>
                   </AnchorPane>
               </content>
