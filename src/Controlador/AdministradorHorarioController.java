@@ -105,6 +105,7 @@ public class AdministradorHorarioController implements Initializable {
         this.tablaHorarios.setItems(listaDeHorarios);
     }
     
+    @FXML
     void buscarHorario(ActionEvent event) throws Exception {
         id = txtBuscarHorario.getText();
         Horario_Atencion_VO horario_atencion = new Horario_Atencion_VO();

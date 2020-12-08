@@ -6,6 +6,7 @@
 package Controlador;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.util.Iterator;
@@ -16,6 +17,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -48,6 +50,58 @@ public class AdministradorMenuController implements Initializable {
     @FXML
     private TableColumn<MenuVO, Integer> colPrecio;
     private ObservableList<MenuVO> listaMenus;
+    
+    //Agregar menú
+    @FXML
+    private JFXTextField txtNombreMenuAdd;
+
+    @FXML
+    private JFXTextArea txtDescMenuAdd;
+
+    @FXML
+    private JFXTextField txtTipoMenuAdd;
+
+    @FXML
+    private JFXTextField txtDiaMenuAdd;
+
+    @FXML
+    private JFXTextField intPrecioMenuAdd;
+
+    @FXML
+    private JFXButton btnGuardarMenuAdd;
+
+    @FXML
+    private JFXButton btnCancelarMenuAdd;
+    
+    
+    //Editar menú
+    @FXML
+    private JFXTextField txtNombreMenuEdit;
+
+    @FXML
+    private JFXTextField txtTipoMenuEdit;
+
+    @FXML
+    private JFXTextArea txtDescMenuEdit;
+
+    @FXML
+    private JFXTextField txtDiaMenuEdit;
+
+    @FXML
+    private JFXTextField txtPrecioMenuEdit;
+
+    @FXML
+    private JFXButton btnCancelarMenuEdit;
+
+    @FXML
+    private JFXButton btnGuardarMenuEdit;
+
+    @FXML
+    private JFXButton btnBuscarMenuEdit;
+    
+    private MenuVO menu = new MenuVO();
+    private Menu_DAO_IMP imp = new Menu_DAO_IMP();
+    //private ObservableList<MenuVO> listaMenus;
     
     
     //Elementos buscar Menú
@@ -96,6 +150,28 @@ public class AdministradorMenuController implements Initializable {
         this.colPrecio.setCellValueFactory(new PropertyValueFactory<>("Precio"));
         this.tablaMenu.setItems(listaMenus);
     }
+    
+    //Métodos agregar menú
+    @FXML
+    void agregarMenu(ActionEvent event) throws Exception {
+        menu.setNombre(txtNombreMenuAdd.getText());
+        menu.setDescripcion(txtDescMenuAdd.getText());
+        menu.setTipo(txtTipoMenuAdd.getText());
+        menu.setDia(txtDiaMenuAdd.getText());
+        menu.setPrecio(Integer.parseInt(intPrecioMenuAdd.getText()));
+        
+        try{
+            imp.create(menu);
+            Alert alert =new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Agregado!");
+            alert.setHeaderText("Se ha agregado correctamente el menú!");
+            alert.showAndWait();
+        } catch(Exception e){
+            throw new Exception("Error al agregar menú "+e.getMessage());
+        }
+        //colocarMenuTabla();
+    }
+    
     
     //Metodos Buscar Menu
     public void ocultarDatos(){
