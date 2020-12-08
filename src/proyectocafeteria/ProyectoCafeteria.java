@@ -26,12 +26,10 @@ public class ProyectoCafeteria extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-        //Parent root = FXMLLoader.load(getClass().getResource("/Ventanas/LoginCafeteriaFXML.fxml"));
-        //Parent root = FXMLLoader.load(getClass().getResource("/Ventanas/Ventana_EstudiantesFXML.fxml"));
-       //Parent root = FXMLLoader.load(getClass().getResource("/Ventanas/Ventana_AdministradorFXML.fxml"));
-       //Parent root = FXMLLoader.load(getClass().getResource("/Ventanas/Ventana_AdministradorFXML.fxml"));
+        
+       //Parent root = FXMLLoader.load(getClass().getResource("/VentanaAux/AdministradorHorario.fxml"));
         Parent root = FXMLLoader.load(getClass().getResource("/Ventanas/Ventana_AdministradorFXML.fxml"));
-        //Parent root = FXMLLoader.load(getClass().getResource("/Ventanas/LoginCafeteriaFXML.fxml"));
+        
         Scene scene = new Scene(root);
         stage.setTitle("Login");
         stage.setScene(scene);

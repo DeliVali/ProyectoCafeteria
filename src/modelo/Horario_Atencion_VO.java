@@ -12,8 +12,8 @@ import java.sql.Date;
  * @author jeffr
  */
 public class Horario_Atencion_VO {
-//Constructor
-    public Horario_Atencion_VO(int id, Date dia, Date horaApertura, Date horaCierre) {
+//Constructor 
+    public Horario_Atencion_VO(int id, String dia, Date horaApertura, Date horaCierre) {
         this.id = id;
         this.dia = dia;
         this.horaApertura = horaApertura;
@@ -21,9 +21,13 @@ public class Horario_Atencion_VO {
     }
 //Variables
     int id;
-    Date dia;
+    String dia;
     Date horaApertura;
     Date horaCierre;
+
+    public Horario_Atencion_VO() {
+      
+    }
     
     //Metodos
  public int getId() {
@@ -34,11 +38,11 @@ public class Horario_Atencion_VO {
         this.id = id;
     }
 
-    public Date getDia() {
+    public String getDia() {
         return dia;
     }
 
-    public void setDia(Date dia) {
+    public void setDia(String dia) {
         this.dia = dia;
     }
 
