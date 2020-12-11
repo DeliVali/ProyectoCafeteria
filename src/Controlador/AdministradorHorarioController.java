@@ -5,11 +5,15 @@
 package Controlador;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.JFXTimePicker;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -75,12 +79,26 @@ public class AdministradorHorarioController implements Initializable {
     @FXML
     private TextField txtDiaHorario;
     
+    @FXML
+    private JFXTextField aDia;
+
+    @FXML
+    private JFXTextField aHA;
+    
+    @FXML
+    private JFXTextField aHC;
+
+    @FXML
+    private JFXButton HAgregar;
+
+    
     
     private Horario_Atencion_VO horario_atencion =new Horario_Atencion_VO();
     
     private Horario_DAO_Imp implementacionDAO = new Horario_DAO_Imp();
     
     private String id;
+     
     
     public void obtenerHorarios(){
         List listaConsulta = null;
@@ -93,6 +111,32 @@ public class AdministradorHorarioController implements Initializable {
         listaDeHorarios.clear();
         while (it.hasNext()){
             listaDeHorarios.add((Horario_Atencion_VO)it.next());
+        }
+    }
+    
+    @FXML
+    void agregarHorario(ActionEvent event) throws Exception {
+        horario_atencion.setDia(aDia.getText());
+        
+        SimpleDateFormat apertura = new SimpleDateFormat("hh:mm");
+        SimpleDateFormat cierre = new SimpleDateFormat("hh:mm");
+        java.util.Date DateA = apertura.parse(aHA.getText());
+        java.sql.Date DateSql = new java.sql.Date(DateA.getTime());
+        java.util.Date DateC = cierre.parse(aHC.getText());
+        java.sql.Date DateSql2 = new java.sql.Date(DateC.getTime());
+        
+        try{
+            horario_atencion.setHoraApertura(DateSql);
+            horario_atencion.setHoraCierre(DateSql2);
+        } catch(Exception e){
+            throw new Exception("Error en la apertura "+e.getMessage());
+        }
+        
+        try{
+            implementacionDAO.create(horario_atencion);
+            System.out.println("Horario agregado");
+        } catch(Exception e){
+            throw new Exception("Error al crear horario "+e.getMessage());
         }
     }
     
