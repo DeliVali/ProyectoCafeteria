@@ -73,7 +73,7 @@
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #FFDBD9;">
                <children>
-                  <Label layoutX="28.0" layoutY="58.0" text="Ingresa nombre del producto a buscar:" textFill="#e06565">
+                  <Label layoutX="57.0" layoutY="70.0" text="Ingresa ID del producto a buscar:" textFill="#e06565">
                      <font>
                         <Font name="Arial Black" size="15.0" />
                      </font>
