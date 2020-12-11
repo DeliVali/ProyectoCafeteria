@@ -3,7 +3,6 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTabPane?>
 <?import com.jfoenix.controls.JFXTextField?>
-<?import java.net.URL?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TableColumn?>
@@ -11,15 +10,15 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<JFXTabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.AdministradorHorarioController">
+<JFXTabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@TabColor.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.AdministradorHorarioController">
    <tabs>
       <Tab text="Horarios">
         <content>
 
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="600.0" style="-fx-background-color: #4BB5E7;">
-               <children>
-                  <TableView fx:id="tablaHorarios" prefHeight="368.0" prefWidth="600.0" style="-fx-background-color: #4BB5E7;" stylesheets="@TabHorario.css">
 
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #FFDBD9;">
+               <children>
+                  <TableView fx:id="tablaHorarios" prefHeight="368.0" prefWidth="600.0">
 
                     <columns>
                       <TableColumn fx:id="columnaId" prefWidth="157.0" text="ID" />
@@ -74,15 +73,39 @@
                         <Font name="System Bold Italic" size="13.0" />
                      </font>
                   </JFXButton>
-               </children>
-              </AnchorPane>
+               </children></AnchorPane>
           </content>
       </Tab>
-
-
-</tabs>
-   <stylesheets>
-      <URL value="@TabColor.css" />
-      <URL value="@TabHorario.css" />
-   </stylesheets>
+      <Tab text="Agregar Horario">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <AnchorPane layoutY="-1.0" prefHeight="370.0" prefWidth="600.0" style="-fx-background-color: #FFDBD9;">
+                     <children>
+                        <Label layoutX="141.0" layoutY="105.0" text="Día:">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="32.0" layoutY="154.0" text="Hora de apertura:">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="55.0" layoutY="203.0" text="Hora de cierre:">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <JFXTextField fx:id="aDia" layoutX="224.0" layoutY="106.0" />
+                        <JFXTextField fx:id="aHA" layoutX="224.0" layoutY="155.0" />
+                        <JFXTextField fx:id="aHC" layoutX="224.0" layoutY="204.0" />
+                        <JFXButton fx:id="HAgregar" layoutX="248.0" layoutY="292.0" onAction="#agregarHorario" style="-fx-background-color: #F9A29C;" text="Guardar" />
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
+        </content>
+      </Tab>
+   </tabs>
 </JFXTabPane>
