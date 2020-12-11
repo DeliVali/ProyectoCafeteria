@@ -12,12 +12,17 @@ import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -30,6 +35,9 @@ import modelo.Menu_DAO_IMP;
  * @author jeffr
  */
 public class AdministradorMenuController implements Initializable {
+    
+    @FXML
+    private JFXTextField search;
     
     //Agregar menú
     @FXML
@@ -82,7 +90,21 @@ public class AdministradorMenuController implements Initializable {
     private Menu_DAO_IMP imp = new Menu_DAO_IMP();
     private ObservableList<MenuVO> listaMenus;
   
-
+    //Elementos ver Menú
+    @FXML
+    private TableView<MenuVO> tablaMenu;
+    @FXML
+    private TableColumn<MenuVO, Integer> colID;
+    @FXML
+    private TableColumn<MenuVO, String> colNombre;
+    @FXML
+    private TableColumn<MenuVO, String> colDes;
+    @FXML
+    private TableColumn<MenuVO, String> colTipo;
+    @FXML
+    private TableColumn<MenuVO, String> colDia;
+    @FXML
+    private TableColumn<MenuVO, Integer> colPrecio;
     
     //Elementos buscar Menú
     @FXML
@@ -152,7 +174,31 @@ public class AdministradorMenuController implements Initializable {
     }*/
 
   
+    //Metodos ver Menú
+    public void obtenerMenus(){
+        List listaConsulta =null;
+        try{
+            listaConsulta = this.implementacionBuscarDao.readAll();
+        }catch (Exception e){
+            System.out.println("Error al leer la consulta");
+        }
+        Iterator it=listaConsulta.iterator();
+        this.listaMenus.clear();
+        while(it.hasNext()){
+            listaMenus.add((MenuVO)it.next());
+        }
+    }
     
+    public void colocarMenusTabla(){
+        this.obtenerMenus();
+        this.colID.setCellValueFactory(new PropertyValueFactory<>("Id"));
+        this.colNombre.setCellValueFactory(new PropertyValueFactory<>("Nombre"));
+        this.colDes.setCellValueFactory(new PropertyValueFactory<>("Descripcion"));
+        this.colTipo.setCellValueFactory(new PropertyValueFactory<>("Tipo"));
+        this.colDia.setCellValueFactory(new PropertyValueFactory<>("Dia"));
+        this.colPrecio.setCellValueFactory(new PropertyValueFactory<>("Precio"));
+        this.tablaMenu.setItems(listaMenus);
+    }
 
     
     //Metodos Buscar Menu
@@ -198,7 +244,44 @@ public class AdministradorMenuController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         this.ocultarDatos();
+        this.listaMenus = FXCollections.observableArrayList();
+        this.colocarMenusTabla();
+        this.filtrar();
     }    
 
+    //Metodo filtrar
+    private void filtrar(){
+         FilteredList<MenuVO> listaFiltrada = new FilteredList<>(listaMenus,b->true) ;
+       search.textProperty().addListener((observable,oldValue,newValue) -> {
+
+      listaFiltrada.setPredicate(menuaux -> {
+				// If filter text is empty, display all persons.
+
+				if (newValue == null || newValue.isEmpty()) {
+					return true;
+				}
+
+				// Compare first name and last name of every person with filter text.
+				String lowerCaseFilter = newValue.toLowerCase();
+
+				if (menuaux.getNombre().toLowerCase().indexOf(lowerCaseFilter) != -1 ) {
+					return true; // Filter matches first name.
+				} else if (menuaux.getDescripcion().toLowerCase().indexOf(lowerCaseFilter) != -1) {
+					return true; // Filter matches last name.
+				}
+				     else  
+				    	 return false; // Does not match.
+			});
+		});
+
+
+		SortedList<MenuVO> sortedData = new SortedList<>(listaFiltrada);
+		 sortedData = new SortedList<>(listaFiltrada);
+
+		sortedData.comparatorProperty().bind(tablaMenu.comparatorProperty());
+
+
+		tablaMenu.setItems(sortedData);
+    }
     
 }
