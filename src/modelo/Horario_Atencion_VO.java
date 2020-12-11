@@ -6,6 +6,8 @@
 package modelo;
 
 import java.sql.Date;
+import java.sql.Time;
+import java.time.LocalTime;
 
 /**
  *
@@ -26,10 +28,12 @@ public class Horario_Atencion_VO {
     Date horaCierre;
 
     public Horario_Atencion_VO() {
-
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
       
 
     }
+    
+
     
     //Metodos
  public int getId() {
@@ -67,4 +71,5 @@ public class Horario_Atencion_VO {
     public String toString() {
         return "Horario_Atencion_VO{" + "id=" + id + ", dia=" + dia + ", horaApertura=" + horaApertura + ", horaCierre=" + horaCierre + '}';
     }
+
 }

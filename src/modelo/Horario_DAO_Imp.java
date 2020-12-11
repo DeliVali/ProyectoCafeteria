@@ -20,6 +20,31 @@ import java.util.logging.Logger;
  */
 public class Horario_DAO_Imp {
     
+    public boolean create (Horario_Atencion_VO horario_atencion) throws Exception{
+        boolean created = false;
+        Statement st;
+        Connection conn;
+        String sql = "INSERT INTO horario_atencion values(NULL, '"+horario_atencion.getDia()+"',"+"'"+horario_atencion.getHoraApertura()
+                +"',"+"'"+horario_atencion.getHoraCierre()+"')";
+        ConexionDB co = new ConexionDB();
+        try{
+            conn = co.conectarMySQL();
+            st = conn.createStatement();
+            st.execute(sql);
+            created = true;
+            st.close();
+            conn.close();
+        } catch(SQLException e){
+            throw new Exception ("Error SQLException "+e.getMessage());
+        } catch(NullPointerException e){
+            throw new Exception ("Error "+e.getMessage());
+        } catch(Exception e){
+            throw new Exception("Error "+e.getMessage());
+        }
+        
+        return created;
+    }
+    
     public boolean update(Horario_Atencion_VO horario_atencion) throws Exception{
         Connection connect = null;
         Statement stm = null;
