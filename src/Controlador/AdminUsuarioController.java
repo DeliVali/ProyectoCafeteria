@@ -155,12 +155,12 @@ public class AdminUsuarioController implements Initializable {
              if(this.implementacionDAO.bloqueo(usuario.getMatricula())){
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Bloqueo de usuario");
-                alert.setHeaderText("El usuario ha sido bloqueado");
+                alert.setHeaderText("No se pudo bloquear al usuario");
                 alert.showAndWait();
              }else{
-                  Alert alert = new Alert(Alert.AlertType.WARNING);
+                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Bloqueo de usuario");
-                alert.setHeaderText("No se pudo bloquear al usuario");
+                alert.setHeaderText("El usuario ha sido bloqueado");
                 alert.showAndWait();
              }
          } catch (Exception ex) {
@@ -229,11 +229,31 @@ public class AdminUsuarioController implements Initializable {
         this.usuario.setTipo(false);
         this.usuario.setBloqueo(false);
         
-         try {       
-             this.implementacionDAO.update(usuario);
+      if(!txtNombre.getText().equals("") && !txtMatricula.getText().equals("") && !txtContrasena.getText().equals("")){  
+         try {      
+             if(!this.implementacionDAO.update(usuario)){
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Edición de usuario");
+                alert.setHeaderText("Usuario editado");
+                alert.showAndWait();
+             }else{
+                 Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Edición de usuario");
+                alert.setHeaderText("Usuario no editado");
+                alert.showAndWait();
+             }
          } catch (Exception ex) {
              System.out.println("Error al editar usuario");
          }
+      }else{
+          //error
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Edición de usuario");
+                alert.setHeaderText("Campos vacíos");
+                alert.showAndWait();
+      }
+      
+    
     }
     
     /**
