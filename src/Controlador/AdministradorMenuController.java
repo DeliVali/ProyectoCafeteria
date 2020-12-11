@@ -81,56 +81,7 @@ public class AdministradorMenuController implements Initializable {
     private MenuVO menu = new MenuVO();
     private Menu_DAO_IMP imp = new Menu_DAO_IMP();
     private ObservableList<MenuVO> listaMenus;
-    //Agregar menú
-    @FXML
-    private JFXTextField txtNombreMenuAdd;
-
-    @FXML
-    private JFXTextArea txtDescMenuAdd;
-
-    @FXML
-    private JFXTextField txtTipoMenuAdd;
-
-    @FXML
-    private JFXTextField txtDiaMenuAdd;
-
-    @FXML
-    private JFXTextField intPrecioMenuAdd;
-
-    @FXML
-    private JFXButton btnGuardarMenuAdd;
-
-    @FXML
-    private JFXButton btnCancelarMenuAdd;
-    
-    
-    //Editar menú
-    @FXML
-    private JFXTextField txtNombreMenuEdit;
-
-    @FXML
-    private JFXTextField txtTipoMenuEdit;
-
-    @FXML
-    private JFXTextArea txtDescMenuEdit;
-
-    @FXML
-    private JFXTextField txtDiaMenuEdit;
-
-    @FXML
-    private JFXTextField txtPrecioMenuEdit;
-
-    @FXML
-    private JFXButton btnCancelarMenuEdit;
-
-    @FXML
-    private JFXButton btnGuardarMenuEdit;
-
-    @FXML
-    private JFXButton btnBuscarMenuEdit;
-    
-    private MenuVO menu = new MenuVO();
-    private Menu_DAO_IMP imp = new Menu_DAO_IMP();
+  
 
     
     //Elementos buscar Menú
@@ -200,26 +151,7 @@ public class AdministradorMenuController implements Initializable {
         this.tvProducto.setItems(listaDeProductos);
     }*/
 
-    //Métodos agregar menú
-    @FXML
-    void agregarMenu(ActionEvent event) throws Exception {
-        menu.setNombre(txtNombreMenuAdd.getText());
-        menu.setDescripcion(txtDescMenuAdd.getText());
-        menu.setTipo(txtTipoMenuAdd.getText());
-        menu.setDia(txtDiaMenuAdd.getText());
-        menu.setPrecio(Integer.parseInt(intPrecioMenuAdd.getText()));
-        
-        try{
-            imp.create(menu);
-            Alert alert =new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Agregado!");
-            alert.setHeaderText("Se ha agregado correctamente el menú!");
-            alert.showAndWait();
-        } catch(Exception e){
-            throw new Exception("Error al agregar menú "+e.getMessage());
-        }
-        //colocarMenuTabla();
-    }
+  
     
 
     
