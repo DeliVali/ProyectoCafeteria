@@ -6,6 +6,7 @@
 package Controlador;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTabPane;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
@@ -14,6 +15,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -24,6 +27,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import modelo.MenuVO;
 import modelo.ProductoVO;
 import modelo.Producto_DAO_IMP;
 import modelo.Sugerir_Pro;
@@ -107,6 +111,8 @@ public class EstudianteProductoController implements Initializable {
     private ProductoVO productoBuscar = new ProductoVO();
     
     //Termina lista de elementos buscar prodcutos
+    @FXML
+    private JFXTextField busquedaUSU;
     
 
     /**
@@ -146,6 +152,7 @@ public class EstudianteProductoController implements Initializable {
        this.listaDeProductos = FXCollections.observableArrayList();
        this.colocarProductosTabla();
        this.ocultarDatos();
+       this.filtrar();
     }    
 
     
@@ -172,7 +179,7 @@ public class EstudianteProductoController implements Initializable {
             e.printStackTrace();
         }
         }
-            
+           this.filtrar(); 
     }
     
     // Método de la reservación de productos
@@ -205,6 +212,7 @@ public class EstudianteProductoController implements Initializable {
                 btnReservarProducto.setDisable(false);
             }
         }
+        this.filtrar();
     }
 
     // Método de la reservación de productos
@@ -237,7 +245,7 @@ public class EstudianteProductoController implements Initializable {
                 System.out.println("Error al resevar producto");
             }
        }
-       
+       this.filtrar();
     }
     
     //Empiezan métodos buscar producto
@@ -257,6 +265,7 @@ public class EstudianteProductoController implements Initializable {
         }catch (Exception e){
             System.out.println("Error al buscar producto "+ e);
         }
+        this.filtrar();
     }
     
     public void ocultarDatos(){
@@ -267,7 +276,41 @@ public class EstudianteProductoController implements Initializable {
     //Terminan métodos buscar producto
 
 
+   //Metodo filtrar
+    private void filtrar(){
+         FilteredList<ProductoVO> listaFiltrada = new FilteredList<>(listaDeProductos,b->true) ;
+       busquedaUSU.textProperty().addListener((observable,oldValue,newValue) -> {
 
+      listaFiltrada.setPredicate(menuaux -> {
+				// If filter text is empty, display all persons.
+
+				if (newValue == null || newValue.isEmpty()) {
+					return true;
+				}
+
+				// Compare first name and last name of every person with filter text.
+				String lowerCaseFilter = newValue.toLowerCase();
+
+				if (menuaux.getNombre().toLowerCase().indexOf(lowerCaseFilter) != -1 ) {
+					return true; // Filter matches first name.
+				} else if (menuaux.getDescripcion().toLowerCase().indexOf(lowerCaseFilter) != -1) {
+					return true; // Filter matches last name.
+				}
+				     else  
+				    	 return false; // Does not match.
+			});
+		});
+
+
+		SortedList<ProductoVO> sortedData = new SortedList<>(listaFiltrada);
+		 sortedData = new SortedList<>(listaFiltrada);
+
+		sortedData.comparatorProperty().bind(tvProducto.comparatorProperty());
+
+
+		tvProducto.setItems(sortedData);
+    }
+    
    
 
 

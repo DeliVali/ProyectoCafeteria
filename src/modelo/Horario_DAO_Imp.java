@@ -89,8 +89,8 @@ public class Horario_DAO_Imp {
             while (rs.next()) {
                 Horario_Atencion_VO c = new Horario_Atencion_VO(rs.getInt(1),
                         rs.getString(2),
-                        rs.getDate(3),
-                        rs.getDate(4));
+                        rs.getString(3),
+                        rs.getString(4));
                 listaHorarios.add(c);
             }
             stm.close();
@@ -121,8 +121,8 @@ public class Horario_DAO_Imp {
             while (rs.next()) {
                 horario_atencion.setId(rs.getInt(1));
                 horario_atencion.setDia(rs.getString(2));
-                horario_atencion.setHoraApertura(rs.getDate(3));
-                horario_atencion.setHoraCierre(rs.getDate(4));
+                horario_atencion.setHoraApertura(rs.getString(3));
+                horario_atencion.setHoraCierre(rs.getString(4));
             }
             stm.close();
             rs.close();

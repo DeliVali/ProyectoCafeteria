@@ -145,7 +145,7 @@ public class AdministradorMenuController implements Initializable {
         } catch(Exception e){
             throw new Exception("Error al agregar menú "+e.getMessage());
         }
-        //colocarMenuTabla();
+        colocarMenusTabla();
     }
     
     public void obtenerMenu(){

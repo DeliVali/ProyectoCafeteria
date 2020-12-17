@@ -15,7 +15,7 @@ import java.time.LocalTime;
  */
 public class Horario_Atencion_VO {
 //Constructor 
-    public Horario_Atencion_VO(int id, String dia, Date horaApertura, Date horaCierre) {
+    public Horario_Atencion_VO(int id, String dia, String horaApertura, String horaCierre) {
         this.id = id;
         this.dia = dia;
         this.horaApertura = horaApertura;
@@ -24,8 +24,8 @@ public class Horario_Atencion_VO {
 //Variables
     int id;
     String dia;
-    Date horaApertura;
-    Date horaCierre;
+    String horaApertura;
+    String horaCierre;
 
     public Horario_Atencion_VO() {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -52,19 +52,19 @@ public class Horario_Atencion_VO {
         this.dia = dia;
     }
 
-    public Date getHoraApertura() {
+    public String getHoraApertura() {
         return horaApertura;
     }
 
-    public void setHoraApertura(Date horaApertura) {
+    public void setHoraApertura(String horaApertura) {
         this.horaApertura = horaApertura;
     }
 
-    public Date getHoraCierre() {
+    public String getHoraCierre() {
         return horaCierre;
     }
 
-    public void setHoraCierre(Date horaCierre) {
+    public void setHoraCierre(String horaCierre) {
         this.horaCierre = horaCierre;
     }
     @Override

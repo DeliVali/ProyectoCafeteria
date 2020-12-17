@@ -5,12 +5,14 @@
 package Controlador;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTimePicker;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -49,10 +51,10 @@ public class AdministradorHorarioController implements Initializable {
     private TableColumn<Horario_Atencion_VO, String> columnaDia;
 
     @FXML
-    private TableColumn<Horario_Atencion_VO, Date> columnaHoraApertura;
+    private TableColumn<Horario_Atencion_VO, String> columnaHoraApertura;
 
     @FXML
-    private TableColumn<Horario_Atencion_VO, Date> columnaHoraCierre;
+    private TableColumn<Horario_Atencion_VO, String> columnaHoraCierre;
     
     // ----------------------------------------
     private ObservableList<Horario_Atencion_VO> listaDeHorarios;
@@ -79,14 +81,13 @@ public class AdministradorHorarioController implements Initializable {
     @FXML
     private TextField txtDiaHorario;
     
-    @FXML
     private JFXTextField aDia;
 
     @FXML
-    private JFXTextField aHA;
+    private JFXTimePicker aHA;
     
     @FXML
-    private JFXTextField aHC;
+    private JFXTimePicker aHC;
 
     @FXML
     private JFXButton HAgregar;
@@ -98,6 +99,8 @@ public class AdministradorHorarioController implements Initializable {
     private Horario_DAO_Imp implementacionDAO = new Horario_DAO_Imp();
     
     private String id;
+    @FXML
+    private JFXComboBox<String> comboBox;
      
     
     public void obtenerHorarios(){
@@ -116,21 +119,12 @@ public class AdministradorHorarioController implements Initializable {
     
     @FXML
     void agregarHorario(ActionEvent event) throws Exception {
-        horario_atencion.setDia(aDia.getText());
         
-        SimpleDateFormat apertura = new SimpleDateFormat("hh:mm");
-        SimpleDateFormat cierre = new SimpleDateFormat("hh:mm");
-        java.util.Date DateA = apertura.parse(aHA.getText());
-        java.sql.Date DateSql = new java.sql.Date(DateA.getTime());
-        java.util.Date DateC = cierre.parse(aHC.getText());
-        java.sql.Date DateSql2 = new java.sql.Date(DateC.getTime());
-        
-        try{
-            horario_atencion.setHoraApertura(DateSql);
-            horario_atencion.setHoraCierre(DateSql2);
-        } catch(Exception e){
-            throw new Exception("Error en la apertura "+e.getMessage());
-        }
+        String diaAux = comboBox.getSelectionModel().getSelectedItem();
+        horario_atencion.setDia(diaAux);
+        horario_atencion.setHoraApertura(aHA.getValue().toString());
+        horario_atencion.setHoraCierre(aHC.getValue().toString());
+  
         
         try{
             implementacionDAO.create(horario_atencion);
@@ -138,18 +132,18 @@ public class AdministradorHorarioController implements Initializable {
         } catch(Exception e){
             throw new Exception("Error al crear horario "+e.getMessage());
         }
+        colocarHorariosTabla();
     }
     
     public void colocarHorariosTabla(){
         this.obtenerHorarios();
         this.columnaId.setCellValueFactory(new PropertyValueFactory<>("id"));
         this.columnaDia.setCellValueFactory(new PropertyValueFactory<>("dia"));
-        this.columnaHoraApertura.setCellValueFactory(new PropertyValueFactory<>("hora_apertura"));        
-        this.columnaHoraCierre.setCellValueFactory(new PropertyValueFactory<>("hora_cierre"));
+        this.columnaHoraApertura.setCellValueFactory(new PropertyValueFactory<>("horaApertura"));        
+        this.columnaHoraCierre.setCellValueFactory(new PropertyValueFactory<>("horaCierre"));
         this.tablaHorarios.setItems(listaDeHorarios);
     }
     
-    @FXML
     void buscarHorario(ActionEvent event) throws Exception {
         id = txtBuscarHorario.getText();
         Horario_Atencion_VO horario_atencion = new Horario_Atencion_VO();
@@ -179,6 +173,9 @@ public class AdministradorHorarioController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         this.implementacionDAO = new Horario_DAO_Imp();
         this.listaDeHorarios = FXCollections.observableArrayList();
+        ObservableList <String> list =FXCollections.observableArrayList("Lunes","Martes","Miercoles"
+         ,"Jueves","Viernes","Sabado");
+        comboBox.setItems(list);
         this.colocarHorariosTabla();
     }    
 
