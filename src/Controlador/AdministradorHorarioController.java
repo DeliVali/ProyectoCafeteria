@@ -22,6 +22,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
@@ -60,27 +61,29 @@ public class AdministradorHorarioController implements Initializable {
     private ObservableList<Horario_Atencion_VO> listaDeHorarios;
     
     /*------------ Editar horario ------------*/
-    @FXML
-    private Button btnBuscarHorario;
+     @FXML
+    private JFXTextField txtBuscarHorario;
 
     @FXML
-    private Button btnGuardar;
+    private JFXTextField txtDiaHorario;
 
     @FXML
-    private Button btnCancelar;
+    private JFXTextField txtHoraApertura;
 
     @FXML
-    private TextField txtBuscarHorario;
+    private JFXTextField txtHoraCierre;
 
     @FXML
-    private TextField txtHoraApertura;
+    private JFXButton btnBuscarHorario;
 
     @FXML
-    private TextField txtHoraCierre;
+    private JFXButton btnGuardar;
 
     @FXML
-    private TextField txtDiaHorario;
+    private JFXTextField txtIDHorario;
     
+    /*------------ Agregar horario ------------*/
+    @FXML
     private JFXTextField aDia;
 
     @FXML
@@ -102,7 +105,7 @@ public class AdministradorHorarioController implements Initializable {
     @FXML
     private JFXComboBox<String> comboBox;
      
-    
+    //Mostrar horario
     public void obtenerHorarios(){
         List listaConsulta = null;
         try{
@@ -117,6 +120,16 @@ public class AdministradorHorarioController implements Initializable {
         }
     }
     
+    public void colocarHorariosTabla(){
+        this.obtenerHorarios();
+        this.columnaId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        this.columnaDia.setCellValueFactory(new PropertyValueFactory<>("dia"));
+        this.columnaHoraApertura.setCellValueFactory(new PropertyValueFactory<>("horaApertura"));        
+        this.columnaHoraCierre.setCellValueFactory(new PropertyValueFactory<>("horaCierre"));
+        this.tablaHorarios.setItems(listaDeHorarios);
+    }
+    
+    //Agregar horario
     @FXML
     void agregarHorario(ActionEvent event) throws Exception {
         
@@ -135,35 +148,50 @@ public class AdministradorHorarioController implements Initializable {
         colocarHorariosTabla();
     }
     
-    public void colocarHorariosTabla(){
-        this.obtenerHorarios();
-        this.columnaId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        this.columnaDia.setCellValueFactory(new PropertyValueFactory<>("dia"));
-        this.columnaHoraApertura.setCellValueFactory(new PropertyValueFactory<>("horaApertura"));        
-        this.columnaHoraCierre.setCellValueFactory(new PropertyValueFactory<>("horaCierre"));
-        this.tablaHorarios.setItems(listaDeHorarios);
-    }
     
+    //Editar horario
+    @FXML
     void buscarHorario(ActionEvent event) throws Exception {
         id = txtBuscarHorario.getText();
-        Horario_Atencion_VO horario_atencion = new Horario_Atencion_VO();
-        horario_atencion = implementacionDAO.read(id);
+        Horario_Atencion_VO horario = new Horario_Atencion_VO();
+        horario = implementacionDAO.read(id);
         
-        this.txtDiaHorario.setText(horario_atencion.getDia());
-        this.txtHoraApertura.setText(horario_atencion.getHoraApertura().toString());
-        this.txtHoraCierre.setText(horario_atencion.getHoraCierre().toString());
+        this.txtIDHorario.setText(Integer.toString(horario.getId()));
+        this.txtDiaHorario.setText(horario.getDia());
+        this.txtHoraApertura.setText(horario.getHoraApertura().toString());
+        this.txtHoraCierre.setText(horario.getHoraCierre().toString());
     }
-    
-    void guardarEdicionHorario(ActionEvent event) {
+
+    @FXML
+    void editarHorario(ActionEvent event) {
+        this.horario_atencion.setId(Integer.parseInt(this.txtIDHorario.getText()));
         this.horario_atencion.setDia((this.txtDiaHorario.getText()));
-        //this.horario_atencion.setHoraApertura((this.txtHoraApertura.getText()));
-        //this.horario_atencion.setHoraCierre((this.txtHoraCierre.getText()));
+        this.horario_atencion.setHoraApertura((this.txtHoraApertura.getText()));
+        this.horario_atencion.setHoraCierre((this.txtHoraCierre.getText()));
         
-         try {       
-             this.implementacionDAO.update(horario_atencion);
+      if(!txtDiaHorario.getText().equals("") && !txtHoraApertura.getText().equals("") && !txtHoraCierre.getText().equals("")){  
+         try {      
+             if(!this.implementacionDAO.update(horario_atencion)){
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Edición de horario");
+                alert.setHeaderText("Horario editado!");
+                alert.showAndWait();
+             }else{
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Edición de horario");
+                alert.setHeaderText("Horario no editado!!!");
+                alert.showAndWait();
+             }
          } catch (Exception ex) {
-             System.out.println("Error al editar el horario");
+             System.out.println("Error al editar horario");
          }
+      }else{
+          //error
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Edición de horario");
+                alert.setHeaderText("Campos vacíos!!!");
+                alert.showAndWait();
+      }
     }
         
     /**

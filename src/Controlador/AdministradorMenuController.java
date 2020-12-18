@@ -63,8 +63,14 @@ public class AdministradorMenuController implements Initializable {
 
     //Editar menú
     @FXML
-    private JFXTextField txtNombreMenuEdit;
+    private JFXTextField txtBuscarMenuEdit;
 
+    @FXML
+    private JFXTextField txtNombreMenuEdit;
+    
+     @FXML
+    private JFXTextField txtIDMenuEdit;
+    
     @FXML
     private JFXTextField txtTipoMenuEdit;
 
@@ -78,9 +84,6 @@ public class AdministradorMenuController implements Initializable {
     private JFXTextField txtPrecioMenuEdit;
 
     @FXML
-    private JFXButton btnCancelarMenuEdit;
-
-    @FXML
     private JFXButton btnGuardarMenuEdit;
 
     @FXML
@@ -89,6 +92,7 @@ public class AdministradorMenuController implements Initializable {
     private MenuVO menu = new MenuVO();
     private Menu_DAO_IMP imp = new Menu_DAO_IMP();
     private ObservableList<MenuVO> listaMenus;
+    private int id;
   
     //Elementos ver Menú
     @FXML
@@ -127,53 +131,6 @@ public class AdministradorMenuController implements Initializable {
     private MenuVO menuBuscar = new MenuVO();
     //Termina lista de elementos buscar Menú
     
-    //Métodos agregar menú
-    @FXML
-    void agregarMenu(ActionEvent event) throws Exception {
-        menu.setNombre(txtNombreMenuAdd.getText());
-        menu.setDescripcion(txtDescMenuAdd.getText());
-        menu.setTipo(txtTipoMenuAdd.getText());
-        menu.setDia(txtDiaMenuAdd.getText());
-        menu.setPrecio(Integer.parseInt(intPrecioMenuAdd.getText()));
-        
-        try{
-            imp.create(menu);
-            Alert alert =new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Agregado!");
-            alert.setHeaderText("Se ha agregado correctamente el menú!");
-            alert.showAndWait();
-        } catch(Exception e){
-            throw new Exception("Error al agregar menú "+e.getMessage());
-        }
-        colocarMenusTabla();
-    }
-    
-    public void obtenerMenu(){
-        List listaConsulta = null;
-        try{
-            listaConsulta = imp.readAll();
-        } catch(Exception e){
-            System.out.println("Error al leer la consulta");
-        }
-        Iterator it = listaConsulta.iterator();
-        listaMenus.clear();
-        while(it.hasNext()){
-           listaMenus.add((MenuVO)it.next());
-        }
-    
-    }
-    
-
-    /*public void colocarMenuTabla(){
-        this.obtenerMenu();
-        this.tabNombre.setCellValueFactory(new PropertyValueFactory<>("Nombre"));
-        this.tabDesc.setCellValueFactory(new PropertyValueFactory<>("Descripcion"));
-        this.tabCanti.setCellValueFactory(new PropertyValueFactory<>("Cantidad"));
-        this.tabPrecio.setCellValueFactory(new PropertyValueFactory<>("Precio"));
-        this.tvProducto.setItems(listaDeProductos);
-    }*/
-
-  
     //Metodos ver Menú
     public void obtenerMenus(){
         List listaConsulta =null;
@@ -240,6 +197,104 @@ public class AdministradorMenuController implements Initializable {
         
     }
     //Terminan metodos BuscarMenu
+    
+    //Agregar menú
+    @FXML
+    void agregarMenu(ActionEvent event) throws Exception {
+        menu.setNombre(txtNombreMenuAdd.getText());
+        menu.setDescripcion(txtDescMenuAdd.getText());
+        menu.setTipo(txtTipoMenuAdd.getText());
+        menu.setDia(txtDiaMenuAdd.getText());
+        menu.setPrecio(Integer.parseInt(intPrecioMenuAdd.getText()));
+        
+        try{
+            imp.create(menu);
+            Alert alert =new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Agregar menú");
+            alert.setHeaderText("Se ha agregado el Menú!");
+            alert.showAndWait();
+        } catch(Exception e){
+            throw new Exception("Error al crear menú "+e.getMessage());
+        }
+        colocarMenusTabla();
+        filtrar();
+    }
+    
+    //Editar menú
+    @FXML
+    void buscarMenu(ActionEvent event) throws Exception {
+        id = Integer.parseInt(txtBuscarMenuEdit.getText());
+        MenuVO menu = new MenuVO();
+        menu = imp.read(id);
+        
+        this.txtIDMenuEdit.setText(Integer.toString(menu.getId()));
+        this.txtNombreMenuEdit.setText(menu.getNombre());
+        this.txtDescMenuEdit.setText(menu.getDescripcion());
+        this.txtTipoMenuEdit.setText(menu.getTipo());
+        this.txtDiaMenuEdit.setText(menu.getDia());
+        this.txtPrecioMenuEdit.setText(Integer.toString(menu.getPrecio()));
+    }
+    
+    @FXML
+    void editarMenu(ActionEvent event) {
+        this.menu.setId(Integer.parseInt(this.txtIDMenuEdit.getText()));
+        this.menu.setNombre((this.txtNombreMenuEdit.getText()));
+        this.menu.setDescripcion((this.txtDescMenuEdit.getText()));
+        this.menu.setTipo((this.txtTipoMenuEdit.getText()));
+        this.menu.setDia(this.txtDiaMenuEdit.getText());
+        this.menu.setPrecio(Integer.parseInt(this.txtPrecioMenuEdit.getText()));
+        
+      if(!txtNombreMenuEdit.getText().equals("") && !txtDescMenuEdit.getText().equals("") && !txtTipoMenuEdit.getText().equals("") 
+              && !txtDiaMenuEdit.getText().equals("") && !txtPrecioMenuEdit.getText().equals("")){  
+         try {      
+             if(!this.imp.update(menu)){
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Edición de Menú");
+                alert.setHeaderText("El menú ha sido editado!");
+                alert.showAndWait();
+             }else{
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Edición de Menú");
+                alert.setHeaderText("El menú no ha sido editado!!!");
+                alert.showAndWait();
+             }
+         } catch (Exception ex) {
+             System.out.println("Error al editar menú!!!");
+         }
+      }else{
+          //error
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Edición de menú");
+            alert.setHeaderText("Campos vacíos");
+            alert.showAndWait();
+      }
+    }
+    
+    //Eliminar menú
+    @FXML
+    void eliminarMenu(ActionEvent event) {
+        int selectedIndex = this.tablaMenu.getSelectionModel().getSelectedIndex();
+        if(selectedIndex >= 0){
+            MenuVO menu = this.tablaMenu.getSelectionModel().getSelectedItem();
+            this.tablaMenu.getSelectionModel().selectLast();
+            try{
+                this.imp.delete(menu);
+                Alert alert =new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Eliminar menú");
+                alert.setHeaderText("Se ha eliminado el Menú!");
+                alert.showAndWait();
+            } catch(Exception e){
+                System.out.println("Error al eliminar");
+            }
+            this.colocarMenusTabla();
+            if(selectedIndex != 0){
+                selectedIndex--;
+                this.tablaMenu.getSelectionModel().select(selectedIndex);
+            }
+        }
+        colocarMenusTabla();
+        filtrar();
+    }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {

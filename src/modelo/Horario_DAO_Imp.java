@@ -46,17 +46,19 @@ public class Horario_DAO_Imp {
     }
     
     public boolean update(Horario_Atencion_VO horario_atencion) throws Exception{
-        Connection connect = null;
+        Connection con = null;
         Statement stm = null;
+        
         boolean actualizar = false;
-        String sql = "UPDATE horario_atencion SET ID= '" 
-                + horario_atencion.getId() +"' ,Día= '" 
+        
+        String sql = "UPDATE horario_atencion SET ID= '" + horario_atencion.getId() + "' , Dia= '" 
                 + horario_atencion.getDia() + "' , Hora_Apertura= '" 
-                + horario_atencion.getHoraApertura() + "', Hora_Cierre = " + " WHERE ID= '" 
-                + horario_atencion.getId() +"'  ";
+                + horario_atencion.getHoraApertura() + "' , Hora_Cierre= '" 
+                + horario_atencion.getHoraCierre() + "' WHERE ID= '" 
+                + horario_atencion.getId() + "' ;";
         try {
-            connect = new ConexionDB().conectarMySQL();
-            stm = connect.createStatement();
+            con = new ConexionDB().conectarMySQL();
+            stm = con.createStatement();
             actualizar = stm.execute(sql);    
         } catch (SQLException e) {
             try {
@@ -68,7 +70,7 @@ public class Horario_DAO_Imp {
             try {
                 throw new Exception("Error en update Exception " + e.getMessage());
             } catch (Exception ex) {
-                Logger.getLogger(Horario_DAO_Imp.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Menu_DAO_IMP.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return actualizar;

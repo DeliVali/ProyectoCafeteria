@@ -12,10 +12,11 @@
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #7CCAE3;">
                <children>
-                  <TableView prefHeight="324.0" prefWidth="600.0" stylesheets="@TabHorario.css">
+                  <TableView fx:id="tablaHorariosEst" prefHeight="370.0" prefWidth="600.0" stylesheets="@TabHorario.css">
                     <columns>
-                      <TableColumn prefWidth="75.0" text="C1" />
-                      <TableColumn prefWidth="75.0" text="C2" />
+                      <TableColumn fx:id="colDiaEst" prefWidth="129.0" text="Día" />
+                      <TableColumn fx:id="colHoraAperEst" prefWidth="237.0" text="Hora de Apertura" />
+                        <TableColumn fx:id="colHoraCierreEst" prefWidth="232.0" text="Hora de Cierre" />
                     </columns>
                   </TableView>
                </children></AnchorPane>

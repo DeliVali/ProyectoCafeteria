@@ -2,9 +2,12 @@ package modelo;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -14,8 +17,27 @@ public class Menu_DAO_IMP implements Menu_DAO{
 
     @Override
     public boolean create(MenuVO menu) throws Exception {
-        //Abigail 
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean created = false;
+        Statement st;
+        Connection conn;
+        String sql = "INSERT INTO menu values(NULL, '"+ menu.getNombre()+"',"+"'"+ menu.getDescripcion()+"',"+
+                "'"+ menu.getTipo()+"',"+"'"+ menu.getDia()+"',"+"'"+ menu.getPrecio()+"')";
+        ConexionDB co = new ConexionDB();
+        try{
+            conn = co.conectarMySQL();
+            st = conn.createStatement();
+            st.execute(sql);
+            created = true;
+            st.close();
+            conn.close();
+        } catch(SQLException e){
+            throw new Exception ("Error SQLException "+e.getMessage());
+        } catch(NullPointerException e){
+            throw new Exception("Error "+e.getMessage());
+        } catch(Exception e){
+            throw new Exception("Error "+e.getMessage());
+        }
+        return created;
     }
 
     @Override
@@ -117,12 +139,54 @@ public class Menu_DAO_IMP implements Menu_DAO{
 
     @Override
     public boolean update(MenuVO menu) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Connection connect = null;
+        Statement stm = null;
+
+        boolean actualizar = false;
+
+        String sql = "UPDATE menu SET ID= '" + menu.getId() + "' , Nombre= '"+ menu.getNombre() + "' , Descripcion= '" 
+                + menu.getDescripcion() + "' , Tipo= '" 
+                + menu.getTipo() + "', Dia= '" + menu.getDia() + "', Precio= '"
+                + menu.getPrecio() + "' WHERE ID= '" + menu.getId() + "' ;";
+        
+        try {
+            connect = new ConexionDB().conectarMySQL();
+            stm = connect.createStatement();
+            actualizar = stm.execute(sql);    
+        } catch (SQLException e) {
+            try {
+                throw new Exception("Error en update SQLException: " + e.getMessage());
+            } catch (Exception ex) {
+                e.printStackTrace();
+            }
+        } catch(Exception e){
+            try {
+                throw new Exception("Error en update Exception " + e.getMessage());
+            } catch (Exception ex) {
+                Logger.getLogger(Menu_DAO_IMP.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return actualizar;
     }
 
     @Override
     public boolean delete(MenuVO menu) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Connection con = null;
+        Statement stm = null;
+        
+        boolean eliminar = false;
+        
+        String sql = "DELETE FROM menu WHERE ID =" + menu.getId();
+        try{
+            con = new ConexionDB().conectarMySQL();
+            stm = con.createStatement();
+            eliminar = stm.execute(sql);
+        } catch(SQLException e){
+            throw new Exception ("Error en el delete SQLException " + e.getCause().toString());
+          } catch (Exception e){
+              throw new Exception ("Error en el delete Exception " + e.getMessage().toString());
+          }
+        return eliminar;
     }
     
 }

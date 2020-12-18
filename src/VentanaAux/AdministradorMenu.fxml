@@ -30,7 +30,7 @@
                         <TableColumn fx:id="colPrecio" prefWidth="76.0" text="Precio" />
                     </columns>
                   </TableView>
-                  <JFXButton fx:id="btnEliminarMenu" buttonType="RAISED" layoutX="516.0" layoutY="324.0" text="Eliminar">
+                  <JFXButton fx:id="btnEliminarMenu" buttonType="RAISED" layoutX="516.0" layoutY="324.0" onAction="#eliminarMenu" text="Eliminar">
                      <font>
                         <Font name="System Bold Italic" size="13.0" />
                      </font>
@@ -76,12 +76,7 @@
                         <JFXTextField fx:id="txtTipoMenuAdd" layoutX="128.0" layoutY="172.0" />
                         <JFXTextField fx:id="txtDiaMenuAdd" layoutX="411.0" layoutY="172.0" />
                         <JFXTextField fx:id="intPrecioMenuAdd" layoutX="128.0" layoutY="231.0" />
-                        <JFXButton fx:id="btnGuardarMenuAdd" buttonType="RAISED" layoutX="187.0" layoutY="309.0" ripplerFill="BLACK" text="Guardar">
-                           <font>
-                              <Font name="System Bold Italic" size="13.0" />
-                           </font>
-                        </JFXButton>
-                        <JFXButton fx:id="btnCancelarMenuAdd" buttonType="RAISED" layoutX="345.0" layoutY="309.0" text="Cancelar">
+                        <JFXButton fx:id="btnGuardarMenuAdd" buttonType="RAISED" layoutX="491.0" layoutY="309.0" onAction="#agregarMenu" ripplerFill="BLACK" text="Guardar">
                            <font>
                               <Font name="System Bold Italic" size="13.0" />
                            </font>
@@ -98,7 +93,7 @@
                <children>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="368.0" prefWidth="600.0" style="-fx-background-color: #E7CA9A;">
                      <children>
-                        <Label layoutX="50.0" layoutY="62.0" text="Nombre:">
+                        <Label layoutX="48.0" layoutY="71.0" text="Nombre:">
                            <font>
                               <Font name="System Bold Italic" size="12.0" />
                            </font>
@@ -129,26 +124,27 @@
                            </font>
                         </Label>
                         <JFXTextField fx:id="txtBuscarMenuEdit" layoutX="195.0" layoutY="21.0" prefHeight="25.0" prefWidth="210.0" />
-                        <JFXTextField fx:id="txtNombreMenuEdit" layoutX="134.0" layoutY="58.0" />
+                        <JFXTextField fx:id="txtNombreMenuEdit" layoutX="132.0" layoutY="67.0" />
                         <JFXTextField fx:id="txtTipoMenuEdit" layoutX="135.0" layoutY="213.0" />
                         <JFXTextArea fx:id="txtDescMenuEdit" layoutX="134.0" layoutY="112.0" prefHeight="81.0" prefWidth="430.0" />
                         <JFXTextField fx:id="txtDiaMenuEdit" layoutX="430.0" layoutY="217.0" />
                         <JFXTextField fx:id="txtPrecioMenuEdit" layoutX="135.0" layoutY="265.0" />
-                        <JFXButton fx:id="btnCancelarMenuEdit" buttonType="RAISED" layoutX="342.0" layoutY="325.0" ripplerFill="BLACK" text="Cancelar">
+                        <JFXButton fx:id="btnGuardarMenuEdit" buttonType="RAISED" layoutX="498.0" layoutY="309.0" onAction="#editarMenu" ripplerFill="BLACK" text="Guardar">
                            <font>
                               <Font name="System Bold Italic" size="13.0" />
                            </font>
                         </JFXButton>
-                        <JFXButton fx:id="btnGuardarMenuEdit" buttonType="RAISED" layoutX="211.0" layoutY="326.0" ripplerFill="BLACK" text="Guardar">
+                        <JFXButton fx:id="btnBuscarMenuEdit" buttonType="RAISED" layoutX="430.0" layoutY="19.0" onAction="#buscarMenu" ripplerFill="BLACK" text="Buscar">
                            <font>
                               <Font name="System Bold Italic" size="13.0" />
                            </font>
                         </JFXButton>
-                        <JFXButton fx:id="btnBuscarMenuEdit" buttonType="RAISED" layoutX="430.0" layoutY="19.0" ripplerFill="BLACK" text="Buscar">
+                        <Label layoutX="345.0" layoutY="71.0" text="ID:">
                            <font>
-                              <Font name="System Bold Italic" size="13.0" />
+                              <Font name="System Bold Italic" size="12.0" />
                            </font>
-                        </JFXButton>
+                        </Label>
+                        <JFXTextField fx:id="txtIDMenuEdit" disable="true" layoutX="429.0" layoutY="67.0" />
                      </children>
                   </AnchorPane>
                </children>
